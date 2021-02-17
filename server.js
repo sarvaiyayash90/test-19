@@ -149,7 +149,7 @@ app.get('/Editstudent/:id', async (req, res) => {
     +--------------------------+  */
 app.put('/UpdateStudent/:id',upload.single('profile'),(req, res) => {
 
-  if (req.files) 
+  if (req.file) 
   {
     const id = req.params.id;
     const delete_img = student.findById({ _id: id })
@@ -187,7 +187,7 @@ app.put('/UpdateStudent/:id',upload.single('profile'),(req, res) => {
   } 
   else 
   {
-    await student.updateOne({ _id: req.params.id }, {
+    student.updateOne({ _id: req.params.id }, {
       first_name: req.body.first_name,
       last_name: req.body.last_name,
       email_id: req.body.email_id,
