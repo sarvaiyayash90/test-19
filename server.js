@@ -160,6 +160,7 @@ app.put('/UpdateStudent/:id',upload.single('profile'),(req, res) => {
           else {
 
             let result_d = cloudinary.uploader.upload(req.file.path);
+            console.log("img",result_d)
 
             student.updateOne({ _id: req.params.id }, {
               first_name: req.body.first_name,
