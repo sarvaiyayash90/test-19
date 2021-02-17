@@ -36,13 +36,6 @@ app.use(bodyParser.json());
 //app.use(cors({origin:'http://localhost:3000'}))
 app.use(cors({origin:'https://yash-19.herokuapp.com'}))
 
-if(process.env.NODE_ENV === "production"){
-  app.use(express.static('client/build'))
-  app.get('*',(req,res)=>{
-    res.sendFile(path.join(__dirname,'client/build','index.html'));
-  });
-}
-
 
 // const storage = multer.diskStorage({
 //   destination: function (req, file, cb) {
@@ -238,7 +231,16 @@ app.get('/liststudent/:id',(req, res) => {
 
 //app.use('/studentdata',student_controller); // Student controller
 
-app.use('/logindata',login_controller); // Login Controller
+// Login Controller
+
+if(process.env.NODE_ENV === "production"){
+  app.use(express.static('client/build'))
+  app.get('*',(req,res)=>{
+    res.sendFile(path.join(__dirname,'client/build','index.html'));
+  });
+}
+
+app.use('/logindata',login_controller); 
 
 app.listen(process.env.PORT || 3100,()=>{console.log("\n \t\t\t < Server Started At Port : (3100) > \n ")});
 

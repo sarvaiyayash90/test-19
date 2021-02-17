@@ -18,7 +18,7 @@ const List_Student = () => {
         console.log("dad",res.data);
         setStudent(res.data);
     }
-
+    
     const delete_student = async id => {
         await axios.delete(`https://demo-yash.herokuapp.com/deletestudent/${id}`);
         load_student_data();
