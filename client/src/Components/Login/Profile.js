@@ -22,7 +22,7 @@ const Profile = () => {
     //console.log("http://localhost:3100/logindata/viewloginprofile/"+id);
 
     const load_login_profile_data = async () => {
-        const res = await axios.get(`https://yash-19.herokuapp.com/logindata/viewloginprofile/${id}`)
+        const res = await axios.get(`https://yash-19.herokuapp.com/viewloginprofile/${id}`)
         set_login(res.data);
     }
 
