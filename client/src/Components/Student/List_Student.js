@@ -16,7 +16,7 @@ const List_Student = () => {
     const load_student_data = () => {
         const res = axios.get(`https://yash-19.herokuapp.com/liststudent/${localStorage.getItem('Token_Key')}`)
         console.log("dad",res.data);
-        setStudent(res.data);
+        setStudent({student_data:res.data});
     }
 
     const delete_student = async id => {
