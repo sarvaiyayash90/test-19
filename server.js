@@ -35,11 +35,11 @@ var app = express();
 //   next();
 // });
 
-//app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(express.urlencoded());
+app.use(bodyParser.urlencoded({ extended: false }))
+// app.use(bodyParser.urlencoded({extended: true}));
+// app.use(express.urlencoded());
 
-app.use(express.json());
+app.use(bodyParser.json());
 //app.use(cors({origin:'http://localhost:3000'}))
 app.use(cors())
 
@@ -282,9 +282,9 @@ app.get('/viewloginprofile/:id', async (req, res) => {
 // Login Controller
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static('client/build'))
+  app.use(express.static('./client/build'))
   app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+    res.sendFile(path.join(__dirname,'..','client','build','index.html'));
   });
 }
 
