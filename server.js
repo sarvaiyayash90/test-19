@@ -27,13 +27,17 @@ const upload = require("./utills/multer");
 
 var app = express();
 
-// app.use(function(req, res, next){
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");//Authorization, sid
-//   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-//   res.header('Access-Control-Allow-Credentials', true);
-//   next();
-// });
+app.use(function(req, res, next){
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");//Authorization, sid
+  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+  res.header('Access-Control-Allow-Credentials', true);
+  res.setHeader("Cache-control", "no-cache, no-store");
+  res.setHeader("Pragma", "no-cache");
+  res.setHeader("Expires", "-1");
+  next();
+
+});
 
 //app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.urlencoded({extended: true}));
