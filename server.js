@@ -45,7 +45,7 @@ app.use(cors())
     |      Creare data         |
     +--------------------------+  */
 
-app.post('/Createstudent', upload.single('profile'),async (req, res, next) => {
+app.post('/Createstudent', upload.single('profile'), async (req, res, next) => {
 
 
   let result = await cloudinary.uploader.upload(req.file.path);
@@ -60,7 +60,7 @@ app.post('/Createstudent', upload.single('profile'),async (req, res, next) => {
     birthday: req.body.birthday,
     graduation_year: req.body.graduation_year,
     profile: result.secure_url,
-    profile_id:result.public_id,
+    profile_id: result.public_id,
     password: req.body.password,
     login_id: req.body.login_id
   })
@@ -103,10 +103,10 @@ app.delete('/deletestudent/:id', (req, res) => {
     .then(result => {
       cloudinary.uploader.destroy(result.profile_id, (err) => {
         if (err) {
-            console.log(err);
+          console.log(err);
         }
+      })
     })
-})
 
   const delete_stu_data = student.remove({ _id: id })
   delete_stu_data.exec()
@@ -147,65 +147,65 @@ app.get('/Editstudent/:id', async (req, res) => {
 /*  +--------------------------+
     |        Update Data       |
     +--------------------------+  */
-app.put('/UpdateStudent/:id',(req, res) => {
+app.put('/UpdateStudent/:id',upload.single('profile'), async (req, res) => {
 
-  //console.log("call");
+  if (req.files) 
+  {
+    const id = req.params.id;
+    const delete_img = await student.findById({ _id: id })
+    delete_img.exec()
+      .then((result) => {
+        cloudinary.uploader.destroy(result.profile_id, ((err) => {
+          if (err) { console.log(err); }
+          else {
 
-  
+            let result_new = await cloudinary.uploader.upload(req.file.path);
 
-    if (req.file) {
-      
-      const id = req.params.id;
-      const delete_img = student.findById({ _id: id })
-      delete_img.exec()
-        .then((result) => {
-          cloudinary.uploader.destroy(result.profile_id);
-
-          let result_new = cloudinary.uploader.upload(req.file.path);
-
-
-          student.updateOne({ _id: req.params.id }, {
-            first_name: req.body.first_name,
-            last_name: req.body.last_name,
-            email_id: req.body.email_id,
-            Department: req.body.Department,
-            contact_no: req.body.contact_no,
-            address: req.body.address,
-            birthday: req.body.birthday,
-            graduation_year: req.body.graduation_year,
-            profile: result_new.secure_url,
-            profile_id:result_new.profile_id,
-            password: req.body.password,
-          }, { new: true })
-            .then((result) => {
-              console.log(result)
-              //res.status(200).json({ "status": "Successfully Updated...." })
-            }).catch(err => {
-              console.log(err);
-              //res.status(500).json({ "status": "unSuccessfully Updated...." })
-            })
-        })
-    } else {
-      student.updateOne({ _id: req.params.id }, {
-        first_name: req.body.first_name,
-        last_name: req.body.last_name,
-        email_id: req.body.email_id,
-        Department: req.body.Department,
-        contact_no: req.body.contact_no,
-        address: req.body.address,
-        birthday: req.body.birthday,
-        graduation_year: req.body.graduation_year,
-        password: req.body.password,
-      }, { new: true })
-        .then((result) => {
-          console.log(result)
-          //res.status(200).json({ "status": "Successfully Updated...." })
-        }).catch(err => {
-          console.log(err);
-          //res.status(500).json({ "status": "unSuccessfully Updated...." })
-        })
-    }
-    
+            student.updateOne({ _id: req.params.id }, {
+              first_name: req.body.first_name,
+              last_name: req.body.last_name,
+              email_id: req.body.email_id,
+              Department: req.body.Department,
+              contact_no: req.body.contact_no,
+              address: req.body.address,
+              birthday: req.body.birthday,
+              graduation_year: req.body.graduation_year,
+              profile: result_new.secure_url,
+              profile_id:result_new.public_id,
+              password: req.body.password,
+            }, { new: true })
+              .then((result) => {
+                console.log(result)
+                //res.status(200).json({ "status": "Successfully Updated...." })
+              }).catch(err => {
+                console.log(err);
+                //res.status(500).json({ "status": "unSuccessfully Updated...." })
+              })
+          }
+        }))
+      })
+  } 
+  else 
+  {
+    await student.updateOne({ _id: req.params.id }, {
+      first_name: req.body.first_name,
+      last_name: req.body.last_name,
+      email_id: req.body.email_id,
+      Department: req.body.Department,
+      contact_no: req.body.contact_no,
+      address: req.body.address,
+      birthday: req.body.birthday,
+      graduation_year: req.body.graduation_year,
+      password: req.body.password,
+    }, { new: true })
+      .then((result) => {
+        console.log(result)
+        //res.status(200).json({ "status": "Successfully Updated...." })
+      }).catch(err => {
+        console.log(err);
+        //res.status(500).json({ "status": "unSuccessfully Updated...." })
+      })
+  }
 })
 
 // login

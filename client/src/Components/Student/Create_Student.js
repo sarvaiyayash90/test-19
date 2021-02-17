@@ -288,7 +288,7 @@ export default class Create_Studenet extends Component {
         console.log(bodyFormData)
         await axios.post("https://yash-19.herokuapp.com/Createstudent", bodyFormData)
             .then(result => {
-                console.log("Result=>", result.json());
+                //console.log("Result=>", result.json());
             }).catch(err => {
                 console.log("Error=>", err);
             })
