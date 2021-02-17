@@ -97,7 +97,7 @@ app.use(cors({origin:'https://yash-19.herokuapp.com'}))
       +--------------------------+  */
 app.get('/liststudent/:id',(req, res) => {
     console.log("cacasdsdasdsdad",req.params.id);
-    console.log("req",req);WWWWW
+    console.log("req",req);
 
     student.find({ login_id: req.params.id })
         .then(result => {
