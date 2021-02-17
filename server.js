@@ -143,7 +143,7 @@ app.get('/Editstudent/:id', async (req, res) => {
 /*  +--------------------------+
     |        Update Data       |
     +--------------------------+  */
-app.put('/UpdateStudent/:id',async (req, res) => {
+app.put('/UpdateStudent/:id',(req, res) => {
 
   //console.log("call");
 
@@ -157,7 +157,7 @@ app.put('/UpdateStudent/:id',async (req, res) => {
         .then((result) => {
           cloudinary.uploader.destroy(result.profile_id);
 
-          let result_new = await cloudinary.uploader.upload(req.file.path);
+          let result_new = cloudinary.uploader.upload(req.file.path);
 
 
           student.updateOne({ _id: req.params.id }, {
