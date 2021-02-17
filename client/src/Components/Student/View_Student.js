@@ -54,7 +54,7 @@ const View_Student = () => {
             <hr/>
             <h1 className="display-4">User Id: {id}</h1>
             <hr />
-            <img  style={{width:'200px',height:'200px',borderRadius:'200px',margin:'0 0 10px 0',border:'10px double #007bff'}}   src={'/uploads/' + student.profile} />
+            <img  style={{width:'200px',height:'200px',borderRadius:'200px',margin:'0 0 10px 0',border:'10px double #007bff'}}   src={student.profile} />
 
             <table class="table table-bordered" >
                 <tbody style={{fontWeight:'bold',border:'hidden'}}>
