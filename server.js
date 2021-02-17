@@ -147,7 +147,7 @@ app.get('/Editstudent/:id', async (req, res) => {
 /*  +--------------------------+
     |        Update Data       |
     +--------------------------+  */
-app.put('/UpdateStudent/:id',upload.single('profile'),async (req, res) => {
+app.put('/UpdateStudent/:id',upload.single('profile'),(req, res) => {
 
   if (req.file) 
   {
@@ -159,7 +159,7 @@ app.put('/UpdateStudent/:id',upload.single('profile'),async (req, res) => {
           if (err) { console.log(err); }
           // else {
 
-            let result_d = await cloudinary.uploader.upload(req.file.path);
+            let result_d = cloudinary.uploader.upload(req.file.path);
             console.log("img",result_d)
 
             student.updateOne({ _id: req.params.id }, {
