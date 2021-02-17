@@ -13,8 +13,8 @@ const List_Student = () => {
         load_student_data();
     }, []);
 
-    const load_student_data = () => {
-        const res = axios.get(`https://yash-19.herokuapp.com/liststudent/${localStorage.getItem('Token_Key')}`)
+    const load_student_data = async () => {
+        const res = await axios.get(`https://yash-19.herokuapp.com/liststudent/${localStorage.getItem('Token_Key')}`)
         console.log("dad",res.data);
         setStudent({student_data:res.data});
     }
