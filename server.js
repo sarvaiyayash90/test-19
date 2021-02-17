@@ -18,6 +18,9 @@ const fastcsv = require("fast-csv"); // CSV
 
 var PDFDocument = require('pdfkit'); // PDF
 
+const cloudinary = require("./utills/cloudinary");
+const upload = require("./utills/multer");
+
 
 //var student_controller = require('./Controllers/Student_Controller')
 // var login_controller = require('./Controllers/Login_Controller')
@@ -37,36 +40,16 @@ app.use(express.json());
 //app.use(cors({origin:'http://localhost:3000'}))
 app.use(cors())
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-      cb(null, 'client/public/uploads');
-  },
-  filename: function (req, file, cb) {
-      photo_name = Date.now() + path.extname(file.originalname)
-      //cb(null, file.originalname)
-      cb(null, photo_name);
-  }
-});
-
-const fileFilter = (req, file, cb) => {
-  const allowedFileTypes = ['image/jpeg', 'image/jpg', 'image/png'];
-  if (allowedFileTypes.includes(file.mimetype)) {
-      cb(null, true);
-  } else {
-      cb(null, false);
-  }
-}
 
 /*  +--------------------------+
     |      Creare data         |
     +--------------------------+  */
 
-app.post('/Createstudent',(req, res, next) => {
+app.post('/Createstudent',upload.single('profile'),(req, res, next) => {
 
-      let upload = multer({ storage: storage, fileFilter: fileFilter }).single('profile');
-  
-      upload(req, res, function (err) {
-  
+
+          let result = await cloudinary.uploader.upload(req.file.path);
+
           const student_new = new student({
               first_name: req.body.first_name,
               last_name: req.body.last_name,
@@ -76,7 +59,7 @@ app.post('/Createstudent',(req, res, next) => {
               address: req.body.address,
               birthday: req.body.birthday,
               graduation_year: req.body.graduation_year,
-              profile: photo_name,
+              profile: result.secure_url,
               password: req.body.password,
               login_id: req.body.login_id
           })
@@ -89,7 +72,7 @@ app.post('/Createstudent',(req, res, next) => {
                   console.log(err);
                   res.status(400).json({ "status": "data Not insert successfully" });
               })
-      })
+     
   })
   
   /*  +--------------------------+
