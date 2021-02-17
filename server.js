@@ -101,8 +101,12 @@ app.delete('/deletestudent/:id', (req, res) => {
   const delete_img = student.findById({ _id: id })
   delete_img.exec()
     .then(result => {
-      cloudinary.uploader.destroy(result.profile_id);
+      cloudinary.uploader.destroy(result.profile_id, (err) => {
+        if (err) {
+            console.log(err);
+        }
     })
+})
 
   const delete_stu_data = student.remove({ _id: id })
   delete_stu_data.exec()
