@@ -35,7 +35,10 @@ var app = express();
 //   next();
 // });
 
-app.use(bodyParser.urlencoded({ extended: false }))
+//app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.urlencoded());
+
 app.use(express.json());
 //app.use(cors({origin:'http://localhost:3000'}))
 app.use(cors())
