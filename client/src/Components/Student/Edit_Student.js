@@ -365,7 +365,7 @@ const Edit_Student = () => {
                     </div> */}
 
                 <hr />
-                <img src={'/uploads/' + profile} style={{ width: '200px', height: '200px', borderRadius: '200px', margin: '0 0 10px 0', border: '10px double #007bff' }} />
+                <img src={profile} style={{ width: '200px', height: '200px', borderRadius: '200px', margin: '0 0 10px 0', border: '10px double #007bff' }} />
                 <hr />
 
                 <form onSubmit={e => onhandlesubmit(e)}>
