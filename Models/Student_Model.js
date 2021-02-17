@@ -28,6 +28,9 @@ const Student_schema = new mongoose.Schema({
     profile:{
         type:String
     },
+    profile_id:{
+        type:String
+    },
     password:{
         type:String
     },
