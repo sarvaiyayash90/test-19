@@ -159,7 +159,7 @@ app.put('/UpdateStudent/:id',upload.single('profile'),(req, res) => {
           if (err) { console.log(err); }
           else {
 
-            let result_new = cloudinary.uploader.upload(req.file.path);
+            let result_d = cloudinary.uploader.upload(req.file.path);
 
             student.updateOne({ _id: req.params.id }, {
               first_name: req.body.first_name,
@@ -170,8 +170,8 @@ app.put('/UpdateStudent/:id',upload.single('profile'),(req, res) => {
               address: req.body.address,
               birthday: req.body.birthday,
               graduation_year: req.body.graduation_year,
-              profile: result_new.secure_url,
-              profile_id:result_new.public_id,
+              profile: result_d.secure_url,
+              profile_id:result_d.public_id,
               password: req.body.password,
             }, { new: true })
               .then((result) => {
