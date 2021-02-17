@@ -97,7 +97,7 @@ const List_Student = () => {
                         {student_data.map((stu, index) => (
                             <tr>
                                 <th id="tab" scope="row">{index + 1}</th>
-                                <td id="tab"><img style={{width:'60px',height:'60px',borderRadius:'60px'}} src={'/uploads/' + stu.profile} /></td>
+                                <td id="tab"><img style={{width:'60px',height:'60px',borderRadius:'60px'}} src={stu.profile} /></td>
                                 <td id="tab">{stu.first_name}</td>
                                 <td id="tab">{stu.last_name}</td>
                                 <td id="tab">{stu.email_id}</td>

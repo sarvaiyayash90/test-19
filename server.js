@@ -143,7 +143,7 @@ app.get('/Editstudent/:id', async (req, res) => {
 /*  +--------------------------+
     |        Update Data       |
     +--------------------------+  */
-app.put('/UpdateStudent/:id', (req, res) => {
+app.put('/UpdateStudent/:id',async (req, res) => {
 
   //console.log("call");
 
