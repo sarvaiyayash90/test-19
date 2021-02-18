@@ -164,6 +164,7 @@ app.put('/UpdateStudent/:id',upload.single('profile'), async (req, res) => {
       })
 
       let result = await cloudinary.uploader.upload(req.file.path);
+
       student.updateOne({ _id: req.params.id }, {
         first_name: req.body.first_name,
         last_name: req.body.last_name,
