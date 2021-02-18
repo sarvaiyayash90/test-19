@@ -111,7 +111,7 @@ const List_Student = () => {
                                     <Link  style={{border:'none'}}  className="btn btn-outline-danger" onClick={() => { if (window.confirm('Are you sure you wish to delete this item?')) delete_student(stu._id) }} ><i class="fas fa-trash-alt"></i></Link>
                                     <Link  style={{border:'none'}}  className="btn btn-outline-success" exact to={`/viewstudent/${stu._id}`}><i class="fa fa-eye fa-spin"></i></Link>
                                     <Link  style={{border:'none'}}  className="btn btn-outline-primary" exact to={`/Editstudent/${stu._id}`} ><i class="far fa-edit"></i></Link>
-                                    {/* <Link  style={{border:'none'}}  className="btn btn-outline-info" onClick={() => { if (window.confirm('Are you sure you wish to create PDF ?')) pdf(stu._id); fetch_pdf(stu._id,stu.first_name,stu.last_name) }} ><i class="far fa-file-pdf"></i></Link> */}
+                                    <Link  style={{border:'none'}}  className="btn btn-outline-info" onClick={() => { if (window.confirm('Are you sure you wish to create PDF ?')) pdf(stu._id); fetch_pdf(stu._id,stu.first_name,stu.last_name) }} ><i class="far fa-file-pdf"></i></Link>
                                 </td>
                             </tr>
                         ))}

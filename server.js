@@ -213,7 +213,62 @@ app.put('/UpdateStudent/:id',upload.single('profile'), async (req, res) => {
   }
 })
 
-// login
+/*  +--------------------------+
+    |        PDF Create        |
+    +--------------------------+  */
+
+router.route('/pdf/:id').post((req, res) => {
+    student.findById(req.params.id)
+        .exec()
+        .then(result => {
+            var pdfDoc = new PDFDocument;
+            var today = new Date();
+            pdfDoc.pipe(fs.createWriteStream('./PDF/' + result.first_name + "_" + result.first_name + "_" + today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear() + '.pdf'));
+            pdfDoc.moveDown(0.5)
+            pdfDoc
+                .image('client/public/uploads/' + result.profile, {
+                    fit: [400, 150],
+                    align: 'center',
+                    valign: 'center'
+                });
+            pdfDoc.moveDown(0.5)
+            pdfDoc.fontSize(25)
+            pdfDoc.text("First Name :- " + result.first_name);
+            pdfDoc.text("Last Name :- " + result.last_name);
+            pdfDoc.text("Email Id :- " + result.email_id);
+            pdfDoc.text("Department :- " + result.Department);
+            pdfDoc.text("Contact No :- " + result.contact_no);
+            pdfDoc.text("Birthday :- " + result.birthday);
+            pdfDoc.text("graduation year :- " + result.graduation_year);
+            pdfDoc.text("Profile :- " + result.profile);
+            pdfDoc.text("Password :- " + result.password);
+            pdfDoc.end();
+        })
+        .catch(err => {
+            res.status(500).send(err)
+        })
+})
+
+/*  +--------------------------------+
+    |        Ftech Pdf Create        |
+    +--------------------------------+  */
+router.route('/fetchpdf/:id').get((req, res) => {
+    const id = req.params.id
+    student.findById({ _id: id })
+        .exec()
+        .then(result => {
+            var today = new Date();
+            var Pdf_Data = result.first_name + "_" + result.first_name + "_" + today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear() + ".pdf"
+            //res.sendFile("./"+ Pdf_Data)
+            var file = fs.createReadStream('./PDF/' + Pdf_Data);
+            file.pipe(res);
+        })
+        .catch(err => {
+            res.json({ msg: "errrooreor" })
+        })
+})
+
+//====================================== login
 
 /*
 +--------------------------+
