@@ -126,7 +126,7 @@ app.delete('/deletestudent/:id', (req, res) => {
     |     Single data show     |
     +--------------------------+  */
 
-app.get('/viewstudent/:id', async (req, res) => {
+app.post('/viewstudent/:id', async (req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   try {
     const student_new = await student.findById(req.params.id)
@@ -139,7 +139,7 @@ app.get('/viewstudent/:id', async (req, res) => {
 /*  +--------------------------+
     |     Edit data show       |
     +--------------------------+  */
-app.get('/Editstudent/:id', async (req, res) => {
+app.post('/Editstudent/:id', async (req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   try {
     const student_new = await student.findById(req.params.id)
