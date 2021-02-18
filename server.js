@@ -168,7 +168,7 @@ app.put('/UpdateStudent/:id',upload.single('profile'),(req, res) => {
 
             let result = cloudinary.uploader.upload(req.file.path,((err) => {
             if (err) { console.log(err); }
-
+          
             console.log("imgsdsadwsedfghjkdsdada================================",result)
 
             student.updateOne({ _id: req.params.id }, {
@@ -190,7 +190,9 @@ app.put('/UpdateStudent/:id',upload.single('profile'),(req, res) => {
               }).catch(err => {
                 console.log(err);
                 //res.status(500).json({ "status": "unSuccessfully Updated...." })
-              })
+              })  
+
+          }))
           // }
         }))
       })
