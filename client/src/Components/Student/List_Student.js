@@ -14,13 +14,9 @@ const List_Student = () => {
     }, []);
 
     const load_student_data = async () => {
-        await axios.post(`https://yash-19.herokuapp.com/liststudent/${localStorage.getItem('Token_Key')}`)
-        .then((result)=>{
-            setStudent(result.data.reverse());
-        }).catch((error)=>{
-            console.log(error);
-        })
-        //window.location.href=`/liststudent/${localStorage.getItem('Token_Key')}`
+        const result = await axios.get(`https://yash-19.herokuapp.com/liststudent/${localStorage.getItem('Token_Key')}`);
+        setStudent(result.data.reverse());
+        window.location.href=`/liststudent/${localStorage.getItem('Token_Key')}`
     }
 
     const delete_student = async id => {
@@ -76,9 +72,9 @@ const List_Student = () => {
                     <div style={{ margin: '0 0 0 50px' }}>
                         <h1 style={{ fontSize: '40px', fontFamily: 'cursive' }}>Students List Page</h1>
                     </div>
-                    <div style={{ margin: '0 0 10px 985px' }}>
+                    {/* <div style={{ margin: '0 0 10px 985px' }}>
                         <Link style={{border:'none'}} className="btn btn-outline-warning btn-lg" onClick={() => { if (window.confirm('Are you sure you wish to create CSV ?')) csv(localStorage.getItem('Token_Key')); fetch_CSV(localStorage.getItem('Token_Key')) }} ><i class="far fa-file-csv fa-2x"></i></Link>
-                    </div>
+                    </div> */}
                 </div>
 
                 <table className="table border">
