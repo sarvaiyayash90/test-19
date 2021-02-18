@@ -85,14 +85,15 @@ app.post('/Createstudent', upload.single('profile'), async (req, res, next) => {
 /*  +--------------------------+
     |        List data         |
     +--------------------------+  */
-app.get('/liststudent/:id', (req, res) => {
+app.post('/liststudent/:id', (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
   student.find({ login_id: req.params.id })
     .exec()
-    .then(result => {
-      console.log("dsdssaas", result);
-      //res.status(200).send(result);
-      res.json(result);
-    }).catch(err => {
+    .then((result) => {
+      //console.log("dsdssaas", result);
+      res.status(200).send(result);
+      //res.json(result);
+    }).catch((err) => {
       console.log(err);
       res.status(500).send(err);
     })

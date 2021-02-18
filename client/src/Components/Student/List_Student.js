@@ -14,8 +14,12 @@ const List_Student = () => {
     }, []);
 
     const load_student_data = async () => {
-        const result = await axios.get(`https://yash-19.herokuapp.com/liststudent/${localStorage.getItem('Token_Key')}`);
-        setStudent(result.data.reverse());
+        await axios.post(`https://yash-19.herokuapp.com/liststudent/${localStorage.getItem('Token_Key')}`)
+        .then((result)=>{
+            setStudent(result.data.reverse());
+        }).catch((error)=>{
+            console.log(error);
+        })
         //window.location.href=`/liststudent/${localStorage.getItem('Token_Key')}`
     }
 
