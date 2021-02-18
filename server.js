@@ -162,8 +162,11 @@ app.put('/UpdateStudent/:id',upload.single('profile'), async (req, res) => {
     const delete_img = student.findById({ _id: id })
     delete_img.exec()
       .then((res) => {
-        cloudinary.uploader.destroy(res.public_id);
+        
+        cloudinary.uploader.destroy(res.profile_id);
+
       })
+
       let result = await cloudinary.uploader.upload(req.file.path);
       student.updateOne({ _id: req.params.id }, {
         first_name: req.body.first_name,
