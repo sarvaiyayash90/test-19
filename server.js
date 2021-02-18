@@ -170,7 +170,8 @@ app.put('/UpdateStudent/:id',upload.single('profile'),(req, res) => {
             console.log(err); 
           }
           else {
-              let result = cloudinary.uploader.upload(req.file.path,((err) => {
+              let upload = cloudinary.uploader().upload(file,ObjectUtils.emptyMap(),((err) => {
+              // let result = cloudinary.uploader.upload(req.file.path,((err) => {
               console.log("imgsdsadwsedfghjkdsdada================================first",result)
               if (err) { console.log("erer",err); }
               else
@@ -185,8 +186,8 @@ app.put('/UpdateStudent/:id',upload.single('profile'),(req, res) => {
                       address: req.body.address,
                       birthday: req.body.birthday,
                       graduation_year: req.body.graduation_year,
-                      profile: result.secure_url,
-                      profile_id: result.public_id,
+                      profile: upload.get("url"),
+                      profile_id: upload.get("public_id"),
                       password: req.body.password,
                     }, { new: true })
                       .then((result) => {
