@@ -82,7 +82,7 @@ app.post('/Createstudent', upload.single('profile'), async (req, res, next) => {
 /*  +--------------------------+
     |        List data         |
     +--------------------------+  */
-app.get('/liststudent/:id', (req, res) => {
+app.post('/liststudent/:id', (req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   student.find({ login_id: req.params.id })
     .exec()
