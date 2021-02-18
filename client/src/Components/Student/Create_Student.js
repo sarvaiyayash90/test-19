@@ -1,6 +1,6 @@
 import React, { Component, useState, useEffect } from 'react'
 import axios from 'axios'
-import { useHistory,Link } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 // import {Button,Form} from 'react-bootstrap';
 
 // funcation start
@@ -221,8 +221,11 @@ export default class Create_Studenet extends Component {
             birthday: '',
             graduation_year: '',
             profile: null,
+            invalidImage: null,
+            handleResponse: null,
             password: ''
         }
+        this.reader = new FileReader();
     };
 
     onInputChange_Student_First_Name = e => {
@@ -258,7 +261,29 @@ export default class Create_Studenet extends Component {
     };
 
     onInputChange_Student_Profile = e => {
-        this.setState({ profile: e.target.files[0] })
+        //this.setState({ profile: e.target.files[0] })
+        const imageFile = e.target.files[0];
+        if (!imageFile) {
+            this.setState({ invalidImage: 'Please select image.' });
+            return false;
+        }
+        if (!imageFile.name.match(/\.(jpg|jpeg|png|gif)$/)) {
+            this.setState({ invalidImage: 'Please select valid image.' });
+            return false;
+        }
+        this.reader.onload = (e) => {
+            const img = new Image();
+            img.onload = () => {
+                this.setState({ profile: imageFile, invalidImage: null });
+            };
+            img.onerror = () => {
+                this.setState({ invalidImage: 'Invalid image content.' });
+                return false;
+            };
+            debugger
+            img.src = e.target.result;
+        };
+        this.reader.readAsDataURL(imageFile);
     };
 
     onInputChange_Student_Password = e => {
@@ -268,6 +293,17 @@ export default class Create_Studenet extends Component {
 
     onhandlesubmit = async e => {
         e.preventDefault();
+
+        const { profile } = this.state;
+        if (!profile) {
+            this.setState({
+                handleResponse: {
+                    isSuccess: false,
+                    message: "Please select image to upload."
+                }
+            });
+            return false;
+        }
 
         // const id = localStorage.getItem('Token_Key');
         // console.log("id",id);
@@ -287,7 +323,13 @@ export default class Create_Studenet extends Component {
 
         console.log(bodyFormData)
         await axios.post("https://yash-19.herokuapp.com/Createstudent", bodyFormData)
-            .then(result => {
+            .then(response => {
+                this.setState({
+                    handleResponse: {
+                      isSuccess: response.status === 200,
+                      message: response.data.message
+                    }
+                  });
                 //console.log("Result=>", result.json());
             }).catch(err => {
                 console.log("Error=>", err);
@@ -297,6 +339,7 @@ export default class Create_Studenet extends Component {
     }
 
     render() {
+        const { handleResponse, invalidImage } = this.state;
         return (
 
             <div className="container py-4">
@@ -306,16 +349,16 @@ export default class Create_Studenet extends Component {
 
                     <div className="col-12 row">
                         <div style={{ margin: '0 545px 0 0' }}>
-                            <Link className="btn btn-primary btn-lg" to="/home"><i class="fas fa-chevron-left" style={{ color: 'white'}}></i> BACK PAGE</Link>
+                            <Link className="btn btn-primary btn-lg" to="/home"><i class="fas fa-chevron-left" style={{ color: 'white' }}></i> BACK PAGE</Link>
                         </div>
                         <div>
                             {/* <h1 className="text-center mb-4"><b>My profile</b></h1> */}
                             <h1><b>ADD STUDENT</b></h1>
                         </div>
                     </div>
-                    <hr/>
+                    <hr />
                     <form onSubmit={e => this.onhandlesubmit(e)}>
-                        <div className="form-row" style={{textAlign:'start'}}>
+                        <div className="form-row" style={{ textAlign: 'start' }}>
                             <div className="form-group col-md-6">
                                 <label htmlFor="name">First Name</label>
                                 <input type="text"
@@ -335,7 +378,7 @@ export default class Create_Studenet extends Component {
                                 />
                             </div>
                         </div>
-                        <div className="form-row" style={{textAlign:'start'}}>
+                        <div className="form-row" style={{ textAlign: 'start' }}>
                             <div className="form-group col-md-6">
                                 <label htmlFor="name">Email</label>
                                 <input type="email"
@@ -355,7 +398,7 @@ export default class Create_Studenet extends Component {
                                 />
                             </div>
                         </div>
-                        <div className="form-row" style={{textAlign:'start'}}>
+                        <div className="form-row" style={{ textAlign: 'start' }}>
                             <div className="form-group col-md-6">
                                 <label htmlFor="name">Contact No</label>
                                 <input type="text"
@@ -377,7 +420,7 @@ export default class Create_Studenet extends Component {
                                 />
                             </div>
                         </div>
-                        <div className="form-group" style={{textAlign:'start'}}>
+                        <div className="form-group" style={{ textAlign: 'start' }}>
                             <label htmlFor="name">Address</label>
                             <textarea className="form-control"
                                 rows="3"
@@ -386,7 +429,7 @@ export default class Create_Studenet extends Component {
                                 onChange={e => this.onInputChange_Student_Address(e)}
                             ></textarea>
                         </div>
-                        <div className="form-row" style={{textAlign:'start'}}>
+                        <div className="form-row" style={{ textAlign: 'start' }}>
                             <div className="form-group col-md-6">
                                 <label htmlFor="name">Graduation Year</label>
                                 <input type="number"
@@ -410,12 +453,13 @@ export default class Create_Studenet extends Component {
                                 <input type="file"
                                     className="form-control"
                                     accept=".png, .jpg, .jpeg"
-                                    required
                                     onChange={e => this.onInputChange_Student_Profile(e)}
                                 />
+                                {invalidImage && <p className="error" style={{color: 'red'}}>{invalidImage}</p>}
+                                {handleResponse && <p style={{color: 'red'}} className={handleResponse.isSuccess ? "success" : "error"}>{handleResponse.message}</p>}
                             </div>
                         </div>
-                        <div className="form-group" style={{textAlign:'start'}}>
+                        <div className="form-group" style={{ textAlign: 'start' }}>
                             <label htmlFor="name">Password</label>
                             <input type="password"
                                 className="form-control"
@@ -425,7 +469,7 @@ export default class Create_Studenet extends Component {
                                 autoComplete="current-password"
                             />
                         </div>
-                        <button type="submit" style={{ width: '200px' }} className="btn btn-primary btn-lg"><i class="fad fa-database" style={{ color: 'white'}}></i>  SUBMIT</button>
+                        <button type="submit" style={{ width: '200px' }} className="btn btn-primary btn-lg"><i class="fad fa-database" style={{ color: 'white' }}></i>  SUBMIT</button>
                     </form>
                 </div>
             </div>
