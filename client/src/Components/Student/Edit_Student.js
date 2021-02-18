@@ -344,8 +344,7 @@ const Edit_Student = () => {
         }
         bodyFormData.append("password", password);
         axios.put(`https://yash-19.herokuapp.com/UpdateStudent/${id}`, bodyFormData);
-        //history.push(`/liststudent/${localStorage.getItem('Token_Key')}`);
-        window.location.href=`/liststudent/${localStorage.getItem('Token_Key')}`
+        history.push(`/liststudent/${localStorage.getItem('Token_Key')}`);
     };
 
     return (
