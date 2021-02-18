@@ -20,6 +20,7 @@ var PDFDocument = require('pdfkit'); // PDF
 
 const cloudinary = require("./utills/cloudinary");
 const upload = require("./utills/multer");
+const cloud = require("./utills/cloudinary_pdf");
 
 
 //var student_controller = require('./Controllers/Student_Controller')
@@ -29,6 +30,7 @@ var app = express();
 
 app.use(function(req, res, next){
   res.header("Access-Control-Allow-Origin", "*");
+  res.setHeader('Content-Type', 'application/pdf');
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");//Authorization, sid
   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
   res.header('Access-Control-Allow-Credentials', true);
@@ -223,14 +225,15 @@ app.post('/pdf/:id',(req, res) => {
         .then(result => {
             var pdfDoc = new PDFDocument;
             var today = new Date();
-            pdfDoc.pipe(fs.createWriteStream('./PDF/' + result.first_name + "_" + result.first_name + "_" + today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear() + '.pdf'));
+            var pdfpath = path.join('./PDF/' + result.first_name + "_" + result.first_name + "_" + today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear() + '.pdf');
+            pdfDoc.pipe(fs.createWriteStream(pdfpath));
             pdfDoc.moveDown(0.5)
-            pdfDoc
-                .image('client/public/uploads/' + result.profile, {
-                    fit: [400, 150],
-                    align: 'center',
-                    valign: 'center'
-                });
+            // pdfDoc
+            //     .image('client/public/uploads/' + result.profile, {
+            //         fit: [400, 150],
+            //         align: 'center',
+            //         valign: 'center'
+            //     });
             pdfDoc.moveDown(0.5)
             pdfDoc.fontSize(25)
             pdfDoc.text("First Name :- " + result.first_name);
@@ -242,6 +245,16 @@ app.post('/pdf/:id',(req, res) => {
             pdfDoc.text("graduation year :- " + result.graduation_year);
             pdfDoc.text("Profile :- " + result.profile);
             pdfDoc.text("Password :- " + result.password);
+
+            cloud.uploads(pdfPath).then((result) => {
+              const pdfFile = {
+              pdfName: pdfpath,
+              pdfUrl: result.url,
+              pdfId: result.id
+               }
+               console.log('pdf results--', pdfFile.pdfUrl)
+            })
+
             pdfDoc.end();
         })
         .catch(err => {
