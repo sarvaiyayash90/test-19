@@ -29,7 +29,6 @@ var app = express();
 
 app.use(function(req, res, next){
   res.header("Access-Control-Allow-Origin", "*");
-  
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");//Authorization, sid
   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
   res.header('Access-Control-Allow-Credentials', true);
@@ -212,6 +211,49 @@ app.put('/UpdateStudent/:id',upload.single('profile'), async (req, res) => {
         //res.status(500).json({ "status": "unSuccessfully Updated...." })
       })
   }
+})
+
+/*  +--------------------------+
+    |        CSV Create        |
+    +--------------------------+  */
+app.get('/csv/:id',(req, res) => {
+    student.find({ login_id: req.params.id })
+        .exec()
+        .then(result => {
+            //console.log(result)
+            const jsonData = JSON.parse(JSON.stringify(result));
+            //console.log("jsonData", jsonData);
+            var today = new Date();
+            const ws = fs.createWriteStream('./CSV/' + 'DATA_INFO' + '_' + today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear() + '.csv');
+            fastcsv
+                .write(jsonData, { headers: true })
+                .on("finish", function () {
+                    console.log("Write to students.csv successfully!");
+                })
+                .pipe(ws);
+            res.status(200).send(result)
+        })
+        .catch(err => {
+            res.status(500).send(err)
+        })
+})
+
+/*  +-----------------------------------+
+    |        fetch CSV generator        |
+    +-----------------------------------+  */
+app.get('/fetchcsv/:id',(req, res) => {
+    console.log("call fetch data");
+    student.find({ login_id: req.params.id })
+        .exec()
+        .then((result) => {
+            var today = new Date();
+            var CSV_DATA = 'DATA_INFO' + '_' + today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear() + '.csv'
+            let inputStream = fs.createReadStream('./CSV/' + CSV_DATA,{headers:true});
+            inputStream.pipe(res);
+            // res.json({ msg: "data pass" }
+        }).catch((err) => {
+            res.json({ msg: "data not pass" })
+        })
 })
 
 /*  +--------------------------+

@@ -24,25 +24,25 @@ const List_Student = () => {
         load_student_data();
     };
 
-    // const csv = async id => {
-    //     await axios.get(`https://yash-19.herokuapp.com/studentdata/csv/${id}`);
-    //     load_student_data();
-    // };
-    //
-    // const fetch_CSV = (id) =>{
-    //     console.log("call fetch")
-    //     axios.get("https://yash-19.herokuapp.com/studentdata/fetchcsv/"+id,{ responseType: 'blob' })
-    //     .then((res) => {
-    //        console.log("res",res);
-    //        const pdfBlob = new Blob([res.data], { type: 'application/csv' });
-    //        //console.log("pdfdata",pdfBlob);
-    //        saveAs(pdfBlob, 'DATA_INFO' + '_' + Date.now() + '.csv');
-    //     })
-    //     .catch(err=>{
-    //        console.log("Error=>",err)
-    //     })
-    // }
-    //
+    const csv = async id => {
+        await axios.get(`https://yash-19.herokuapp.com/studentdata/csv/${id}`);
+        load_student_data();
+    };
+    
+    const fetch_CSV = (id) =>{
+        console.log("call fetch")
+        axios.get("https://yash-19.herokuapp.com/studentdata/fetchcsv/"+id,{ responseType: 'blob' })
+        .then((res) => {
+           console.log("res",res);
+           const pdfBlob = new Blob([res.data], { type: 'application/csv' });
+           //console.log("pdfdata",pdfBlob);
+           saveAs(pdfBlob, 'DATA_INFO' + '_' + Date.now() + '.csv');
+        })
+        .catch(err=>{
+           console.log("Error=>",err)
+        })
+    }
+    
     
     const pdf = async id => {
         await axios.post(`https://yash-19.herokuapp.com/studentdata/pdf/${id}`);
@@ -72,9 +72,9 @@ const List_Student = () => {
                     <div style={{ margin: '0 0 0 50px' }}>
                         <h1 style={{ fontSize: '40px', fontFamily: 'cursive' }}>Students List Page</h1>
                     </div>
-                    {/* <div style={{ margin: '0 0 10px 985px' }}>
+                    <div style={{ margin: '0 0 10px 985px' }}>
                         <Link style={{border:'none'}} className="btn btn-outline-warning btn-lg" onClick={() => { if (window.confirm('Are you sure you wish to create CSV ?')) csv(localStorage.getItem('Token_Key')); fetch_CSV(localStorage.getItem('Token_Key')) }} ><i class="far fa-file-csv fa-2x"></i></Link>
-                    </div> */}
+                    </div>
                 </div>
 
                 <table className="table border">
