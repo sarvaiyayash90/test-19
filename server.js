@@ -217,7 +217,7 @@ app.put('/UpdateStudent/:id',upload.single('profile'), async (req, res) => {
     |        PDF Create        |
     +--------------------------+  */
 
-router.route('/pdf/:id').post((req, res) => {
+app.post('/pdf/:id',(req, res) => {
     student.findById(req.params.id)
         .exec()
         .then(result => {
@@ -252,7 +252,7 @@ router.route('/pdf/:id').post((req, res) => {
 /*  +--------------------------------+
     |        Ftech Pdf Create        |
     +--------------------------------+  */
-router.route('/fetchpdf/:id').get((req, res) => {
+app.get('/fetchpdf/:id',(req, res) => {
     const id = req.params.id
     student.findById({ _id: id })
         .exec()
