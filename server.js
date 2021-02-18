@@ -87,10 +87,8 @@ app.post('/Createstudent', upload.single('profile'), async (req, res, next) => {
     |        List data         |
     +--------------------------+  */
 app.get('/liststudent/:id', (req, res) => {
-  console.log("cacasdsdasdsdad", req.params.id);
-  console.log("req", req);
-
   student.find({ login_id: req.params.id })
+    .exec()
     .then(result => {
       console.log("dsdssaas", result);
       res.status(200).send(result);
@@ -154,7 +152,7 @@ app.get('/Editstudent/:id', async (req, res) => {
 /*  +--------------------------+
     |        Update Data       |
     +--------------------------+  */
-app.put('/UpdateStudent/:id',upload.single('profile'),(req, res) => {
+app.put('/UpdateStudent/:id',upload.single('profile'), async (req, res) => {
 
   console.log("caac");
 
@@ -164,44 +162,30 @@ app.put('/UpdateStudent/:id',upload.single('profile'),(req, res) => {
     const delete_img = student.findById({ _id: id })
     delete_img.exec()
       .then((res) => {
-        cloudinary.uploader.destroy(res.profile_id, ((err) => {
-          if (err) 
-          { 
-            console.log(err); 
-          }
-          else {
-              let upload = cloudinary.uploader().upload(file,ObjectUtils.emptyMap(),((err) => {
-              // let result = cloudinary.uploader.upload(req.file.path,((err) => {
-              console.log("imgsdsadwsedfghjkdsdada================================first",result)
-              if (err) { console.log("erer",err); }
-              else
-                {
-                    console.log("imgsdsadwsedfghjkdsdada================================end",result)
-                    student.updateOne({ _id: req.params.id }, {
-                      first_name: req.body.first_name,
-                      last_name: req.body.last_name,
-                      email_id: req.body.email_id,
-                      Department: req.body.Department,
-                      contact_no: req.body.contact_no,
-                      address: req.body.address,
-                      birthday: req.body.birthday,
-                      graduation_year: req.body.graduation_year,
-                      profile: upload.get("url"),
-                      profile_id: upload.get("public_id"),
-                      password: req.body.password,
-                    }, { new: true })
-                      .then((result) => {
-                        console.log(result)
-                        //res.status(200).json({ "status": "Successfully Updated...." })
-                      }).catch(err => {
-                        console.log(err);
-                        //res.status(500).json({ "status": "unSuccessfully Updated...." })
-                      }) 
-                }
-            }))
-          }
-        }))
+        cloudinary.uploader.destroy(res.public_id);
       })
+      let result = await cloudinary.uploader.upload(req.file.path);
+      student.updateOne({ _id: req.params.id }, {
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
+        email_id: req.body.email_id,
+        Department: req.body.Department,
+        contact_no: req.body.contact_no,
+        address: req.body.address,
+        birthday: req.body.birthday,
+        graduation_year: req.body.graduation_year,
+        profile: result.secure_url,
+        profile_id: result.public_id,
+        password: req.body.password,
+      }, { new: true })
+        .then((result) => {
+          console.log(result)
+          res.json(result)
+          //res.status(200).json({ "status": "Successfully Updated...." })
+        }).catch(err => {
+          console.log(err);
+          //res.status(500).json({ "status": "unSuccessfully Updated...." })
+        }) 
   } 
   else 
   {
