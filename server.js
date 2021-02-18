@@ -138,6 +138,7 @@ app.post('/viewstudent/:id', async (req, res) => {
     |     Edit data show       |
     +--------------------------+  */
 app.get('/Editstudent/:id', async (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
   try {
     const student_new = await student.findById(req.params.id)
     res.status(200).json(student_new)
@@ -159,9 +160,7 @@ app.put('/UpdateStudent/:id',upload.single('profile'), async (req, res) => {
     const delete_img = student.findById({ _id: id })
     delete_img.exec()
       .then((res) => {
-        
         cloudinary.uploader.destroy(res.profile_id);
-
       })
 
       let result = await cloudinary.uploader.upload(req.file.path);
