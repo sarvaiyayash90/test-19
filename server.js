@@ -286,7 +286,5 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-
-
 app.listen(process.env.PORT || 3100, () => { console.log("\n \t\t\t < Server Started At Port : (3100) > \n ") });
 
