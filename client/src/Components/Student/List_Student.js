@@ -43,24 +43,25 @@ const List_Student = () => {
     //     })
     // }
     //
-    // const pdf = async id => {
-    //     await axios.post(`https://yash-19.herokuapp.com/studentdata/pdf/${id}`);
-    //     load_student_data();
-    // };
-    //
-    // const fetch_pdf = (id,fname,lname) =>{
-    //     console.log("call fetch")
-    //     console.log(id,fname,lname);
-    //     axios.get("https://yash-19.herokuapp.com/studentdata/fetchpdf/"+id,{ responseType: 'blob' })
-    //     .then((res) => {
-    //        const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
-    //        console.log("pdfdata",pdfBlob);
-    //        saveAs(pdfBlob, fname + "_" + lname + "_" + Date.now() +'.pdf');
-    //     })
-    //     .catch(err=>{
-    //        console.log("Error=>",err)
-    //     })
-    // }
+    
+    const pdf = async id => {
+        await axios.post(`https://yash-19.herokuapp.com/studentdata/pdf/${id}`);
+        load_student_data();
+    };
+    
+    const fetch_pdf = (id,fname,lname) =>{
+        console.log("call fetch")
+        console.log(id,fname,lname);
+        axios.get("https://yash-19.herokuapp.com/studentdata/fetchpdf/"+id,{ responseType: 'blob' })
+        .then((res) => {
+           const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
+           console.log("pdfdata",pdfBlob);
+           saveAs(pdfBlob, fname + "_" + lname + "_" + Date.now() +'.pdf');
+        })
+        .catch(err=>{
+           console.log("Error=>",err)
+        })
+    }
 
 
     return (
