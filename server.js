@@ -156,6 +156,8 @@ app.get('/Editstudent/:id', async (req, res) => {
     +--------------------------+  */
 app.put('/UpdateStudent/:id',upload.single('profile'),(req, res) => {
 
+  console.log("caac");
+  
   if (req.file) 
   {
     const id = req.params.id;
