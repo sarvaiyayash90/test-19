@@ -17,6 +17,7 @@ const List_Student = () => {
         const res = await axios.get(`https://yash-19.herokuapp.com/liststudent/${localStorage.getItem('Token_Key')}`)
         console.log("dad",res.data);
         setStudent(res.data);
+        window.location.href="/liststudent/${localStorage.getItem('Token_Key')}"
     }
 
     const delete_student = async id => {
