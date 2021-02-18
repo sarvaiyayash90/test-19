@@ -167,7 +167,7 @@ app.put('/UpdateStudent/:id',upload.single('profile'),async (req, res) => {
           if (err) { console.log(err); }
           // else {
 
-            let result = await cloudinary.uploader.upload(req.file.path);
+            var result = await cloudinary.uploader.upload(req.file.path);
 
             console.log("imgsdsadwsedfghjkdsdada================================",result)
 
