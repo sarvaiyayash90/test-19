@@ -83,7 +83,7 @@ app.post('/Createstudent', upload.single('profile'), async (req, res, next) => {
     |        List data         |
     +--------------------------+  */
 app.post('/liststudent/:id', (req, res) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
+  //res.setHeader("Access-Control-Allow-Origin", "*");
   student.find({ login_id: req.params.id })
     .exec()
     .then((result) => {
@@ -127,7 +127,7 @@ app.delete('/deletestudent/:id', (req, res) => {
     +--------------------------+  */
 
 app.post('/viewstudent/:id', async (req, res) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
+  //res.setHeader("Access-Control-Allow-Origin", "*");
   try {
     const student_new = await student.findById(req.params.id)
     res.json(student_new)
@@ -140,7 +140,7 @@ app.post('/viewstudent/:id', async (req, res) => {
     |     Edit data show       |
     +--------------------------+  */
 app.post('/Editstudent/:id', async (req, res) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
+  //res.setHeader("Access-Control-Allow-Origin", "*");
   try {
     const student_new = await student.findById(req.params.id)
     res.status(200).json(student_new)

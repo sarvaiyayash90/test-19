@@ -305,7 +305,7 @@ const Edit_Student = () => {
     }, []);
 
     const loadUser = async () => {
-        const result = await axios.get(`https://yash-19.herokuapp.com/Editstudent/${id}`);
+        const result = await axios.post(`https://yash-19.herokuapp.com/Editstudent/${id}`);
         setStudent(result.data);
         setStudent({
             first_name: result.data.first_name,
