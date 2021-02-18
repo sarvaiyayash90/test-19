@@ -164,36 +164,38 @@ app.put('/UpdateStudent/:id',upload.single('profile'),(req, res) => {
       .then((res) => {
         cloudinary.uploader.destroy(res.profile_id, ((err) => {
           if (err) { console.log(err); }
-          // else {
+          else{
 
-            let result = cloudinary.uploader.upload(req.file.path,((err) => {
-            if (err) { console.log(err); }
-          
-            console.log("imgsdsadwsedfghjkdsdada================================",result)
+              let result = cloudinary.uploader.upload(req.file.path,((err) => {
+              if (err) { console.log(err); }
+              else{
+            
+              console.log("imgsdsadwsedfghjkdsdada================================",result)
 
-            student.updateOne({ _id: req.params.id }, {
-              first_name: req.body.first_name,
-              last_name: req.body.last_name,
-              email_id: req.body.email_id,
-              Department: req.body.Department,
-              contact_no: req.body.contact_no,
-              address: req.body.address,
-              birthday: req.body.birthday,
-              graduation_year: req.body.graduation_year,
-              profile: result.secure_url,
-              profile_id: result.public_id,
-              password: req.body.password,
-            }, { new: true })
-              .then((result) => {
-                console.log(result)
-                //res.status(200).json({ "status": "Successfully Updated...." })
-              }).catch(err => {
-                console.log(err);
-                //res.status(500).json({ "status": "unSuccessfully Updated...." })
-              })  
-
-          }))
-          // }
+              student.updateOne({ _id: req.params.id }, {
+                first_name: req.body.first_name,
+                last_name: req.body.last_name,
+                email_id: req.body.email_id,
+                Department: req.body.Department,
+                contact_no: req.body.contact_no,
+                address: req.body.address,
+                birthday: req.body.birthday,
+                graduation_year: req.body.graduation_year,
+                profile: result.secure_url,
+                profile_id: result.public_id,
+                password: req.body.password,
+              }, { new: true })
+                .then((result) => {
+                  console.log(result)
+                  //res.status(200).json({ "status": "Successfully Updated...." })
+                }).catch(err => {
+                  console.log(err);
+                  //res.status(500).json({ "status": "unSuccessfully Updated...." })
+                }) 
+              }
+              
+            }))
+          }
         }))
       })
   } 
