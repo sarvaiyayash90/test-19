@@ -32,9 +32,6 @@ app.use(function(req, res, next){
   res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");//Authorization, sid
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
   res.setHeader('Access-Control-Allow-Credentials', true);
-  // res.setHeader("Cache-control", "no-cache, no-store");
-  // res.setHeader("Pragma", "no-cache");
-  // res.setHeader("Expires", "-1");
   next();
 });
 
@@ -86,6 +83,7 @@ app.post('/Createstudent', upload.single('profile'), async (req, res, next) => {
     |        List data         |
     +--------------------------+  */
 app.get('/liststudent/:id', (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
   student.find({ login_id: req.params.id })
     .exec()
     .then((result) => {
@@ -129,6 +127,7 @@ app.delete('/deletestudent/:id', (req, res) => {
     +--------------------------+  */
 
 app.get('/viewstudent/:id', async (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
   try {
     const student_new = await student.findById(req.params.id)
     res.json(student_new)
@@ -141,6 +140,7 @@ app.get('/viewstudent/:id', async (req, res) => {
     |     Edit data show       |
     +--------------------------+  */
 app.get('/Editstudent/:id', async (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
   try {
     const student_new = await student.findById(req.params.id)
     res.status(200).json(student_new)
