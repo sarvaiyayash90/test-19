@@ -32,11 +32,10 @@ app.use(function(req, res, next){
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");//Authorization, sid
   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
   res.header('Access-Control-Allow-Credentials', true);
-  res.setHeader("Cache-control", "no-cache, no-store");
-  res.setHeader("Pragma", "no-cache");
-  res.setHeader("Expires", "-1");
+  // res.setHeader("Cache-control", "no-cache, no-store");
+  // res.setHeader("Pragma", "no-cache");
+  // res.setHeader("Expires", "-1");
   next();
-
 });
 
 //app.use(bodyParser.urlencoded({ extended: false }))
@@ -91,7 +90,8 @@ app.get('/liststudent/:id', (req, res) => {
     .exec()
     .then(result => {
       console.log("dsdssaas", result);
-      res.status(200).send(result);
+      //res.status(200).send(result);
+      res.json(result);
     }).catch(err => {
       console.log(err);
       res.status(500).send(err);
