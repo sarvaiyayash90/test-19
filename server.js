@@ -154,7 +154,7 @@ app.get('/Editstudent/:id', async (req, res) => {
 /*  +--------------------------+
     |        Update Data       |
     +--------------------------+  */
-app.put('/UpdateStudent/:id',upload.single('profile'),(req, res) => {
+app.put('/UpdateStudent/:id',upload.single('profile'),async (req, res) => {
 
   if (req.file) 
   {
@@ -162,11 +162,13 @@ app.put('/UpdateStudent/:id',upload.single('profile'),(req, res) => {
     const delete_img = student.findById({ _id: id })
     delete_img.exec()
       .then((res) => {
+
         cloudinary.uploader.destroy(res.profile_id, ((err) => {
           if (err) { console.log(err); }
           // else {
 
-            let result = cloudinary.uploader.upload(req.file.path);
+            let result = await cloudinary.uploader.upload(req.file.path);
+
             console.log("imgsdsadwsedfghjkdsdada================================",result)
 
             student.updateOne({ _id: req.params.id }, {
