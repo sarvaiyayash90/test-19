@@ -157,7 +157,7 @@ app.get('/Editstudent/:id', async (req, res) => {
 app.put('/UpdateStudent/:id',upload.single('profile'),(req, res) => {
 
   console.log("caac");
-  
+
   if (req.file) 
   {
     const id = req.params.id;
@@ -170,10 +170,9 @@ app.put('/UpdateStudent/:id',upload.single('profile'),(req, res) => {
             console.log(err); 
           }
           else {
-            
               let result = cloudinary.uploader.upload(req.file.path,((err) => {
               console.log("imgsdsadwsedfghjkdsdada================================first",result)
-              if (err) { console.log(err); }
+              if (err) { console.log("erer",err); }
               else
                 {
                     console.log("imgsdsadwsedfghjkdsdada================================end",result)
