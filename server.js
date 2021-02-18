@@ -137,7 +137,7 @@ app.post('/viewstudent/:id', async (req, res) => {
 /*  +--------------------------+
     |     Edit data show       |
     +--------------------------+  */
-app.post('/Editstudent/:id', async (req, res) => {
+app.get('/Editstudent/:id', async (req, res) => {
   try {
     const student_new = await student.findById(req.params.id)
     res.status(200).json(student_new)
