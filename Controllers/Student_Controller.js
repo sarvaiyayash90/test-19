@@ -8,6 +8,9 @@ var fs = require('fs'); // file systems
 const fastcsv = require("fast-csv"); // CSV
 var PDFDocument = require('pdfkit'); // PDF
 
+const cloudinary = require("../utills/cloudinary");
+const upload = require("../utills/multer");
+
 // const path = require('path'); //path
 
 // multer photo upload
