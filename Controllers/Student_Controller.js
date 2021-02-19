@@ -161,6 +161,7 @@ router.get('/Editstudent/:id', async (req, res) => {
 router.put('/UpdateStudent/:id', upload.single('profile'), async (req, res) => {
 
     console.log("caac");
+    
 
     if (req.file) {
         const id = req.params.id;

@@ -277,7 +277,6 @@ const Edit_Student = () => {
     let history = useHistory();
     const { id } = useParams();
     console.log("id", id);
-    const reader = new FileReader();
 
     const [student, setStudent] = useState({
         first_name: '',
@@ -298,16 +297,8 @@ const Edit_Student = () => {
         setStudent({ ...student, [e.target.name]: e.target.value });
     };
 
-    const [ newprofile, setfiledata] = useState({
-        newpro_data : null,
-        invalidImage : null
-    });
-
-    const { newpro_data , invalidImage } = newprofile;
-
-    //const [invalidImage, setinvalidImage] = useState(null);
-
-
+    const [newprofile, setfiledata] = useState(null);
+    const [invalidImage, setinvalidImage] = useState(null);
 
     useEffect(() => {
         loadUser();
@@ -339,6 +330,7 @@ const Edit_Student = () => {
 
     const onhandlesubmit = e => {
         e.preventDefault();
+
         const bodyFormData = new FormData();
         bodyFormData.append("first_name", first_name);
         bodyFormData.append("last_name", last_name);
@@ -348,15 +340,23 @@ const Edit_Student = () => {
         bodyFormData.append("address", address);
         bodyFormData.append("birthday", birthday);
         bodyFormData.append("graduation_year", graduation_year);
-        if (newpro_data != null) {
-            bodyFormData.append("profile", newpro_data);
+        if (newprofile != null) {
+            if (!newprofile.name.match(/\.(jpg|jpeg|png)$/)) {
+                setinvalidImage('Please select valid image.');
+                return false;
+            }
+            setinvalidImage('');
+            bodyFormData.append("profile", newprofile);
         }
         bodyFormData.append("password", password);
-        axios.put(`https://yash-19.herokuapp.com/studentdata/UpdateStudent/${id}`, bodyFormData)
-        .then((res)=>{
+        
+        axios
+        .put(`https://yash-19.herokuapp.com/studentdata/UpdateStudent/${id}`, bodyFormData)
+        .then(res=>{
+            console.log(res);
             window.location.href=`/liststudent/${localStorage.getItem('Token_Key')}`
-        }).catch((err)=>{
-            console.log(err)
+        }).catch(err=>{
+            console.log(err);
         })
         //history.push(`/liststudent/${localStorage.getItem('Token_Key')}`);
     };
@@ -431,7 +431,7 @@ const Edit_Student = () => {
                             />
                         </div>
                     </div>
-                    <div className="form-row" style={{textAlign:'start'}}>
+                    <div className="form-row" style={{textAlign:'start'}}> 
                         <div className="form-group col-md-6">
                             <label htmlFor="name">Contact No</label>
                             <input type="text"
@@ -497,32 +497,10 @@ const Edit_Student = () => {
                                 name="newprofile"
                                 //onChange={e => onInputChange_Student_Profile(e)}
                                 onChange={e => {
-                                    //setfiledata(e.target.files[0])
-                                        const imageFile = e.target.files[0];
-                                        if (!imageFile) {
-                                            setfiledata({ invalidImage: 'Please select image.' });
-                                            return false;
-                                        }
-                                        if (!imageFile.name.match(/\.(jpg|jpeg|png|gif)$/)) {
-                                            setfiledata({ invalidImage: 'Please select valid image.' });
-                                            return false;
-                                        }
-                                        reader.onload = (e) => {
-                                            const img = new Image();
-                                            img.onload = () => {
-                                                setfiledata({ newpro_data: imageFile, invalidImage: null });
-                                            };
-                                            img.onerror = () => {
-                                                setfiledata({ invalidImage: 'Invalid image content.' });
-                                                return false;
-                                            };
-                                            debugger
-                                            img.src = e.target.result;
-                                        };
-                                        reader.readAsDataURL(imageFile);
+                                    setfiledata(e.target.files[0])
                                 }}
                             />
-                            {invalidImage && <p className="error" style={{color: 'red'}}>{invalidImage}</p>}
+                            <p className="error" style={{color: 'red'}}>{invalidImage}</p>
                         </div>
                     </div>
                     <div className="form-group" style={{textAlign:'start'}}>
@@ -547,3 +525,6 @@ const Edit_Student = () => {
 export default Edit_Student;
 
 // EOF FUncation
+
+
+

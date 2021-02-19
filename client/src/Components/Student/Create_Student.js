@@ -267,14 +267,15 @@ export default class Create_Studenet extends Component {
             this.setState({ invalidImage: 'Please select image.' });
             return false;
         }
-        if (!imageFile.name.match(/\.(jpg|jpeg|png|gif)$/)) {
+        if (!imageFile.name.match(/\.(jpg|jpeg|png)$/)) {
             this.setState({ invalidImage: 'Please select valid image.' });
             return false;
         }
         this.reader.onload = (e) => {
             const img = new Image();
             img.onload = () => {
-                this.setState({ profile: imageFile, invalidImage: null });
+                this.setState({ profile: imageFile, invalidImage: null,handleResponse: null });
+                return true;
             };
             img.onerror = () => {
                 this.setState({ invalidImage: 'Invalid image content.' });
@@ -299,7 +300,7 @@ export default class Create_Studenet extends Component {
             this.setState({
                 handleResponse: {
                     isSuccess: false,
-                    message: "Please select image to upload."
+                    message: "Please select image Like JPG, JPEG And PNG."
                 }
             });
             return false;
