@@ -23,8 +23,6 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.json());
 app.use(cors())
 
-
-
 app.use('/studentdata',student_controller); // Student controller
 app.use('/logindata',login_controller);  // Login Controller
 

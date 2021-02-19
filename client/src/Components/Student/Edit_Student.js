@@ -352,8 +352,13 @@ const Edit_Student = () => {
             bodyFormData.append("profile", newpro_data);
         }
         bodyFormData.append("password", password);
-        axios.put(`https://yash-19.herokuapp.com/studentdata/UpdateStudent/${id}`, bodyFormData);
-        history.push(`/liststudent/${localStorage.getItem('Token_Key')}`);
+        axios.put(`https://yash-19.herokuapp.com/studentdata/UpdateStudent/${id}`, bodyFormData)
+        .then((res)=>{
+            window.location.href=`/liststudent/${localStorage.getItem('Token_Key')}`
+        }).catch((err)=>{
+            console.log(err)
+        })
+        //history.push(`/liststudent/${localStorage.getItem('Token_Key')}`);
     };
 
     return (

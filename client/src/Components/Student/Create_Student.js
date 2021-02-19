@@ -330,12 +330,11 @@ export default class Create_Studenet extends Component {
                       message: response.data.message
                     }
                   });
-                //console.log("Result=>", result.json());
+                window.location.href=`/liststudent/${localStorage.getItem('Token_Key')}`
             }).catch(err => {
                 console.log("Error=>", err);
             })
-
-        this.props.history.push(`/liststudent/${localStorage.getItem('Token_Key')}`);
+        //this.props.history.push(`/liststudent/${localStorage.getItem('Token_Key')}`);
     }
 
     render() {
