@@ -163,7 +163,6 @@ router.put('/UpdateStudent/:id', upload.single('profile'), async (req, res) => {
 
 
     if (req.file) {
-        console.log('sdsdsd');
         const id = req.params.id;
         const delete_img = student.findById({ _id: id })
         delete_img.exec()
@@ -196,7 +195,6 @@ router.put('/UpdateStudent/:id', upload.single('profile'), async (req, res) => {
             })
     }
     else {
-        console.log("sssdsd")
         try{
             await student.findOneAndUpdate(req.params.id,req.body)
             res.status(200).json({ status:"ok"})

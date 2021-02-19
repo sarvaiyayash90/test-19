@@ -6,6 +6,7 @@ import jsPDF from 'jspdf'
 
 import { Link, NavLink } from 'react-router-dom';
 
+
 const List_Student = () => {
 
     const [student_data, setStudent] = useState([]);

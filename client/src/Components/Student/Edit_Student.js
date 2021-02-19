@@ -345,15 +345,10 @@ const Edit_Student = () => {
         }
         bodyFormData.append("password", password);
         
-        const config = {
-            headers: {
-                'content-type': 'multipart/form-data'
-            }
-        }
-        
-        await axios.put(`https://yash-19.herokuapp.com/studentdata/UpdateStudent/${id}`, bodyFormData,config)
+        await axios.put(`https://yash-19.herokuapp.com/studentdata/UpdateStudent/${id}`, bodyFormData)
         .then((res)=>{
-             window.location.href=`/liststudent/${localStorage.getItem('Token_Key')}`
+            console.log("res",res)
+            window.location.href=`/liststudent/${localStorage.getItem('Token_Key')}`
         }).catch((err)=>{
             console.log(err);
         })
