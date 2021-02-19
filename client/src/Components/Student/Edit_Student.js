@@ -328,7 +328,7 @@ const Edit_Student = () => {
     };
 
 
-    const onhandlesubmit = e => {
+    const onhandlesubmit = async (e) => {
         e.preventDefault();
         const bodyFormData = new FormData();
         bodyFormData.append("first_name", first_name);
@@ -348,11 +348,21 @@ const Edit_Student = () => {
             setinvalidImage('');
             bodyFormData.append("profile", newprofile);
         }
-
         bodyFormData.append("password", password);
-        axios.put(`https://yash-19.herokuapp.com/studentdata/UpdateStudent/${id}`, bodyFormData)
-        //window.location.href=`/liststudent/${localStorage.getItem('Token_Key')}`
-        history.push(`/liststudent/${localStorage.getItem('Token_Key')}`);
+        
+        const config = {
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
+        }
+        
+        await axios.put(`https://yash-19.herokuapp.com/studentdata/UpdateStudent/${id}`, bodyFormData,config)
+        .then((res)=>{
+             window.location.href=`/liststudent/${localStorage.getItem('Token_Key')}`
+        }).catch((err)=>{
+            console.log(err);
+        })
+        //history.push(`/liststudent/${localStorage.getItem('Token_Key')}`);
     };
 
     return (
@@ -487,7 +497,6 @@ const Edit_Student = () => {
                             <label htmlFor="file">Profile</label>
                             <input type="file"
                                 className="form-control"
-                                accept=".png, .jpg, .jpeg"
                                 name="newprofile"
                                 //onChange={e => onInputChange_Student_Profile(e)}
                                 onChange={e => {

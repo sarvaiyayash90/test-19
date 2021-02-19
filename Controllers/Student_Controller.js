@@ -163,6 +163,7 @@ router.put('/UpdateStudent/:id', upload.single('profile'), async (req, res) => {
 
 
     if (req.file) {
+        console.log('sdsdsd');
         const id = req.params.id;
         const delete_img = student.findById({ _id: id })
         delete_img.exec()
@@ -195,6 +196,7 @@ router.put('/UpdateStudent/:id', upload.single('profile'), async (req, res) => {
             })
     }
     else {
+        console.log("sssdsd")
         student.updateOne({ _id: req.params.id }, {
             first_name: req.body.first_name,
             last_name: req.body.last_name,
