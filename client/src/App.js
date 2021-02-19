@@ -52,7 +52,9 @@ function App() {
               {/* EOF Login */}
 
               {/* start Not found */}
-              <Route component={NotFound} />
+              <Redirect to="/home" component={Home} />
+              {/* <Route  /> */}
+
               {/* EOF Not found */}
 
             </Switch>
