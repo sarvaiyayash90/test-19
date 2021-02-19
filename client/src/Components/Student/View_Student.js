@@ -2,6 +2,8 @@ import React, { useState, useEffect, Component } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import moment from 'moment';
+import jsPDF from 'jspdf'
+import 'jspdf-autotable'
 
 // start funcation
 const View_Student = () => {
@@ -30,7 +32,38 @@ const View_Student = () => {
         setstudent(res.data);
     }
 
+    const pdf_new = id => {
+        console.log("dsds",id);
+        axios.get(`https://yash-19.herokuapp.com/studentdata/viewstudent/${id}`)
+        .then((res)=>{
+            console.log("res",res.data)
+            var doc = new jsPDF('p', 'pt', 'letter');
+            doc.setLineWidth(5);  
+            doc.text(280,40, "MY DATA");
+            doc.text(280,50,"--------------")
+            doc.addImage(res.data.profile,240,60,150,150);
+            doc.autoTable({ html: '#my-table' })
+            doc.autoTable({
+                html: '#simple_table',
+                startY: 220,
+                styles: {  
+                    halign:'center',
+                    halign:'center',
+                    valign:'middle',
+                    fontSize:12,
+                    cellPadding:10,
+                    fontStyle:'bold',
+                    font:'helvetica'
+                },
+            })
+            doc.save(res.data.first_name + "_" + res.data.last_name + "_" + Date.now() +'.pdf')
+        }).catch((err)=>{
+            console.log("Error",err);
+        })
+      }   
+
     return (
+        
         <div className="container py-4">
             <link href="https://kit-pro.fontawesome.com/releases/v5.15.2/css/pro.min.css" rel="stylesheet"></link>
 
@@ -56,7 +89,7 @@ const View_Student = () => {
             <hr />
             <img  style={{width:'200px',height:'200px',borderRadius:'200px',margin:'0 0 10px 0',border:'10px double #007bff'}}   src={student.profile} />
 
-            <table class="table table-bordered" >
+            <table class="table table-bordered" id="simple_table" >
                 <tbody style={{fontWeight:'bold',border:'hidden'}}>
                     <tr><td id="tab_view">first name </td><td> {student.first_name}</td></tr>
                     <tr><td id="tab_view">Last name  </td><td>{student.last_name}</td></tr>
@@ -70,6 +103,7 @@ const View_Student = () => {
                     <tr><td>Password  </td><td>{student.password}</td></tr>
                 </tbody>
             </table>
+            <Link  style={{border:'none'}}  className="btn btn-outline-info" onClick={() => { if (window.confirm('Are you sure you wish to create PDF ?')){ pdf_new(student._id)}}} ><i class="far fa-file-pdf fa-3x"></i></Link>
             </div>
         </div>
     );
