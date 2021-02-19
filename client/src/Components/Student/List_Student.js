@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import moment from 'moment';
 import { saveAs } from 'file-saver';
+import jsPDF from 'jspdf'
 
 import { Link, NavLink } from 'react-router-dom';
 
@@ -14,12 +15,13 @@ const List_Student = () => {
     }, []);
 
     const load_student_data = async () => {
-        const result = await axios.post(`https://yash-19.herokuapp.com/liststudent/${localStorage.getItem('Token_Key')}`);
-        setStudent(result.data.reverse());
+        const result = await axios.get(`https://yash-19.herokuapp.com/studentdata/liststudent/${localStorage.getItem('Token_Key')}`);
+        setStudent(result.data);
+    
     }
 
     const delete_student = async id => {
-        await axios.delete(`https://yash-19.herokuapp.com/deletestudent/${id}`);
+        await axios.delete(`https://yash-19.herokuapp.com/studentdata/deletestudent/${id}`);
         load_student_data();
     };
 
@@ -43,25 +45,46 @@ const List_Student = () => {
     }
     
     
-    const pdf = async id => {
-        await axios.post(`https://yash-19.herokuapp.com/studentdata/pdf/${id}`);
-        load_student_data();
-    };
+    // const pdf = async id => {
+    //     await axios.post(`https://yash-19.herokuapp.com/studentdata/pdf/${id}`);
+    //     load_student_data();
+    // };
     
-    const fetch_pdf = (id,fname,lname) =>{
-        console.log("call fetch")
-        console.log(id,fname,lname);
-        axios.get("https://yash-19.herokuapp.com/studentdata/fetchpdf/"+id,{ responseType: 'blob' })
-        .then((res) => {
-           const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
-           console.log("pdfdata",pdfBlob);
-           saveAs(pdfBlob, fname + "_" + lname + "_" + Date.now() +'.pdf');
-        })
-        .catch(err=>{
-           console.log("Error=>",err)
-        })
-    }
+    // const fetch_pdf = (id,fname,lname) =>{
+    //     console.log("call fetch")
+    //     console.log(id,fname,lname);
+    //     axios.get("https://yash-19.herokuapp.com/studentdata/fetchpdf/"+id,{ responseType: 'blob' })
+    //     .then((res) => {
+    //        const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
+    //        console.log("pdfdata",pdfBlob);
+    //        saveAs(pdfBlob, fname + "_" + lname + "_" + Date.now() +'.pdf');
+    //     })
+    //     .catch(err=>{
+    //        console.log("Error=>",err)
+    //     })
+    // }
 
+    const pdf_new = id => {
+        console.log("dsds",id);
+        axios.get(`https://yash-19.herokuapp.com/studentdata/Editstudent/${id}`)
+        .then((res)=>{
+            console.log("res",res.data)
+            var doc = new jsPDF('p', 'pt');
+            doc.setFont('helvetica')
+            doc.addImage(res.data.profile,250,50,150,150);
+            doc.text(150, 250,'First_name :-' + res.data.first_name)
+            doc.text(150, 275,'Last_name :-' + res.data.last_name)
+            doc.text(150, 300,'Email Id :-' + res.data.email_id)
+            doc.text(150, 325,'Department :-' + res.data.Department)
+            doc.text(150, 350,'Address :-' + res.data.address)
+            doc.text(150, 400,'Birthday :-' + moment(res.data.birthday).format('DD-MM-YYYY'))
+            doc.text(150, 425,'Graduation Year :-' + res.data.graduation_year)
+            doc.text(150, 450,'password :-' + res.data.password)   
+            doc.save(res.data.first_name + "_" + res.data.last_name + "_" + Date.now() +'.pdf')
+        }).catch((err)=>{
+            console.log("Error",err);
+        })
+      }   
 
     return (
         <div className="container" style={{ marginLeft: '0px' }}>
@@ -111,7 +134,8 @@ const List_Student = () => {
                                     <Link  style={{border:'none'}}  className="btn btn-outline-danger" onClick={() => { if (window.confirm('Are you sure you wish to delete this item?')) delete_student(stu._id) }} ><i class="fas fa-trash-alt"></i></Link>
                                     <Link  style={{border:'none'}}  className="btn btn-outline-success" exact to={`/viewstudent/${stu._id}`}><i class="fa fa-eye fa-spin"></i></Link>
                                     <Link  style={{border:'none'}}  className="btn btn-outline-primary" exact to={`/Editstudent/${stu._id}`} ><i class="far fa-edit"></i></Link>
-                                    <Link  style={{border:'none'}}  className="btn btn-outline-info" onClick={() => { if (window.confirm('Are you sure you wish to create PDF ?')) pdf(stu._id); fetch_pdf(stu._id,stu.first_name,stu.last_name) }} ><i class="far fa-file-pdf"></i></Link>
+                                    {/* <Link  style={{border:'none'}}  className="btn btn-outline-info" onClick={() => { if (window.confirm('Are you sure you wish to create PDF ?')) pdf(stu._id); fetch_pdf(stu._id,stu.first_name,stu.last_name) }} ><i class="far fa-file-pdf"></i></Link> */}
+                                    <Link  style={{border:'none'}}  className="btn btn-outline-info" onClick={() => { if (window.confirm('Are you sure you wish to create PDF ?')); pdf_new(stu._id);}} ><i class="far fa-file-pdf"></i></Link>
                                 </td>
                             </tr>
                         ))}

@@ -314,7 +314,7 @@ const Edit_Student = () => {
     }, []);
 
     const loadUser = async () => {
-        const result = await axios.get(`https://yash-19.herokuapp.com/Editstudent/${id}`);
+        const result = await axios.get(`https://yash-19.herokuapp.com/studentdata/Editstudent/${id}`);
         setStudent(result.data);
         setStudent({
             first_name: result.data.first_name,
@@ -352,7 +352,7 @@ const Edit_Student = () => {
             bodyFormData.append("profile", newpro_data);
         }
         bodyFormData.append("password", password);
-        axios.put(`https://yash-19.herokuapp.com/UpdateStudent/${id}`, bodyFormData);
+        axios.put(`https://yash-19.herokuapp.com/studentdata/UpdateStudent/${id}`, bodyFormData);
         history.push(`/liststudent/${localStorage.getItem('Token_Key')}`);
     };
 

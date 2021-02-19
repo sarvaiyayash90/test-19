@@ -26,7 +26,7 @@ const View_Student = () => {
     const { id } = useParams();
 
     const load_student_data = async () => {
-        const res = await axios.post(`https://yash-19.herokuapp.com/viewstudent/${id}`)
+        const res = await axios.get(`https://yash-19.herokuapp.com/studentdata/viewstudent/${id}`)
         setstudent(res.data);
     }
 
