@@ -330,7 +330,6 @@ const Edit_Student = () => {
 
     const onhandlesubmit = e => {
         e.preventDefault();
-
         const bodyFormData = new FormData();
         bodyFormData.append("first_name", first_name);
         bodyFormData.append("last_name", last_name);
@@ -340,6 +339,7 @@ const Edit_Student = () => {
         bodyFormData.append("address", address);
         bodyFormData.append("birthday", birthday);
         bodyFormData.append("graduation_year", graduation_year);
+        
         if (newprofile != null) {
             if (!newprofile.name.match(/\.(jpg|jpeg|png)$/)) {
                 setinvalidImage('Please select valid image.');
@@ -348,17 +348,11 @@ const Edit_Student = () => {
             setinvalidImage('');
             bodyFormData.append("profile", newprofile);
         }
+
         bodyFormData.append("password", password);
-        
-        axios
-        .put(`https://yash-19.herokuapp.com/studentdata/UpdateStudent/${id}`, bodyFormData)
-        .then(res=>{
-            console.log(res);
-            window.location.href=`/liststudent/${localStorage.getItem('Token_Key')}`
-        }).catch(err=>{
-            console.log(err);
-        })
-        //history.push(`/liststudent/${localStorage.getItem('Token_Key')}`);
+        axios.put(`https://yash-19.herokuapp.com/studentdata/UpdateStudent/${id}`, bodyFormData)
+        //window.location.href=`/liststudent/${localStorage.getItem('Token_Key')}`
+        history.push(`/liststudent/${localStorage.getItem('Token_Key')}`);
     };
 
     return (
