@@ -39,7 +39,7 @@ const Login_stu = () => {
         // bodyFormData.append("email_id", email_id);
         // bodyFormData.append("password", password);
 
-        axios.post("https://yash-19.herokuapp.com/Login", bodyFormData).then((result) => {
+        axios.post("https://yash-19.herokuapp.com/logindata/Login", bodyFormData).then((result) => {
             console.log("result=>", result)
             alert(result.data.message)
             //alert(result.data.session)

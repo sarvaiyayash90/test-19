@@ -220,7 +220,7 @@ router.put('/UpdateStudent/:id', upload.single('profile'), async (req, res) => {
 /*  +--------------------------+
     |        CSV Create        |
     +--------------------------+  */
-// router.route('/csv/:id').get((req, res) => {
+// router.get('/csv/:id',(req, res) => {
 //     student.find({ login_id: req.params.id })
 //         .exec()
 //         .then(result => {
@@ -241,11 +241,11 @@ router.put('/UpdateStudent/:id', upload.single('profile'), async (req, res) => {
 //             res.status(500).send(err)
 //         })
 // })
-
+    
 /*  +-----------------------------------+
     |        fetch CSV generator        |
     +-----------------------------------+  */
-// router.route('/fetchcsv/:id').get((req, res) => {
+// router.get('/fetchcsv/:id',(req, res) => {
 //     console.log("call fetch data");
 //     student.find({ login_id: req.params.id })
 //         .exec()
@@ -264,13 +264,14 @@ router.put('/UpdateStudent/:id', upload.single('profile'), async (req, res) => {
     |        PDF Create        |
     +--------------------------+  */
 
-// router.route('/pdf/:id').post((req, res) => {
+// router.post('/pdf/:id',(req, res) => {
 //     student.findById(req.params.id)
 //         .exec()
 //         .then(result => {
 //             var pdfDoc = new PDFDocument;
 //             var today = new Date();
-//             pdfDoc.pipe(fs.createWriteStream('./PDF/' + result.first_name + "_" + result.first_name + "_" + today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear() + '.pdf'));
+//             var pdfpath = path.join('./PDF/' + result.first_name + "_" + result.first_name + "_" + today.getDate() + '-' + (today.getMonth() + 1) + '-' + today.getFullYear() + '.pdf');
+//             pdfDoc.pipe(fs.createWriteStream(pdfpath));
 //             pdfDoc.moveDown(0.5)
 //             pdfDoc
 //                 .image('client/public/uploads/' + result.profile, {
@@ -299,7 +300,7 @@ router.put('/UpdateStudent/:id', upload.single('profile'), async (req, res) => {
 /*  +--------------------------------+
     |        Ftech Pdf Create        |
     +--------------------------------+  */
-// router.route('/fetchpdf/:id').get((req, res) => {
+// router.get('/fetchpdf/:id',(req, res) => {
 //     const id = req.params.id
 //     student.findById({ _id: id })
 //         .exec()
