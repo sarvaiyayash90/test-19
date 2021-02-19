@@ -5,7 +5,7 @@ import { saveAs } from 'file-saver';
 import jsPDF from 'jspdf'
 
 import { Link, NavLink } from 'react-router-dom';
-
+import { CSVLink } from "react-csv";
 
 const List_Student = () => {
 
@@ -18,13 +18,26 @@ const List_Student = () => {
     const load_student_data = async () => {
         const result = await axios.get(`https://yash-19.herokuapp.com/studentdata/liststudent/${localStorage.getItem('Token_Key')}`);
         setStudent(result.data);
-    
     }
 
     const delete_student = async id => {
         await axios.delete(`https://yash-19.herokuapp.com/studentdata/deletestudent/${id}`);
         load_student_data();
     };
+
+    const headers = [
+        { label: "First Name", key: "first_name" },
+        { label: "Last Name", key: "last_name" },
+        { label: "Email", key: "email_id" },
+        { label: "Department", key: "Department" },
+        { label: "contact_no", key: "contact_no" },
+        { label: "address", key: "address" },
+        { label: "birthday", key: "birthday" },
+        { label: "graduation_year", key: "graduation_year" },
+        { label: "profile", key: "profile" },
+        { label: "profile_id", key: "profile_id" },
+        { label: "password", key: "password" }        
+      ];
 
     // const csv = async id => {
     //     await axios.get(`https://yash-19.herokuapp.com/studentdata/csv/${id}`);
@@ -97,6 +110,7 @@ const List_Student = () => {
                     </div>
                     <div style={{ margin: '0 0 10px 985px' }}>
                         {/* <Link style={{border:'none'}} className="btn btn-outline-warning btn-lg" onClick={() => { if (window.confirm('Are you sure you wish to create CSV ?')) csv(localStorage.getItem('Token_Key')); fetch_CSV(localStorage.getItem('Token_Key')) }} ><i class="far fa-file-csv fa-2x"></i></Link> */}
+                        { student_data ? <CSVLink style={{border:'none'}} filename={"My_File_"+Date.now()+".csv"} className="btn btn-outline-warning btn-lg" data={student_data} headers={headers}><i class="far fa-file-csv fa-2x"></i></CSVLink> : null }
                     </div>
                 </div>
 
@@ -136,7 +150,7 @@ const List_Student = () => {
                                     <Link  style={{border:'none'}}  className="btn btn-outline-success" exact to={`/viewstudent/${stu._id}`}><i class="fa fa-eye fa-spin"></i></Link>
                                     <Link  style={{border:'none'}}  className="btn btn-outline-primary" exact to={`/Editstudent/${stu._id}`} ><i class="far fa-edit"></i></Link>
                                     {/* <Link  style={{border:'none'}}  className="btn btn-outline-info" onClick={() => { if (window.confirm('Are you sure you wish to create PDF ?')) pdf(stu._id); fetch_pdf(stu._id,stu.first_name,stu.last_name) }} ><i class="far fa-file-pdf"></i></Link> */}
-                                    <Link  style={{border:'none'}}  className="btn btn-outline-info" onClick={() => { if (window.confirm('Are you sure you wish to create PDF ?')); pdf_new(stu._id);}} ><i class="far fa-file-pdf"></i></Link>
+                                    <Link  style={{border:'none'}}  className="btn btn-outline-info" onClick={() => { if (window.confirm('Are you sure you wish to create PDF ?')){ pdf_new(stu._id)}}} ><i class="far fa-file-pdf"></i></Link>
                                 </td>
                             </tr>
                         ))}
