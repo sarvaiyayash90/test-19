@@ -197,24 +197,30 @@ router.put('/UpdateStudent/:id', upload.single('profile'), async (req, res) => {
     }
     else {
         console.log("sssdsd")
-        student.updateOne({ _id: req.params.id }, {
-            first_name: req.body.first_name,
-            last_name: req.body.last_name,
-            email_id: req.body.email_id,
-            Department: req.body.Department,
-            contact_no: req.body.contact_no,
-            address: req.body.address,
-            birthday: req.body.birthday,
-            graduation_year: req.body.graduation_year,
-            password: req.body.password,
-        }, { new: true })
-            .then((result) => {
-                console.log(result)
-                //res.status(200).json({ "status": "Successfully Updated...." })
-            }).catch(err => {
-                console.log(err);
-                //res.status(500).json({ "status": "unSuccessfully Updated...." })
-            })
+        try{
+            await student.findOneAndUpdate(req.params.id,req.body)
+            res.status(200).json({ status:"ok"})
+        }catch(err){
+            res.status(400).send({erros:err})
+        }
+        // student.updateOne({ _id: req.params.id }, {
+        //     first_name: req.body.first_name,
+        //     last_name: req.body.last_name,
+        //     email_id: req.body.email_id,
+        //     Department: req.body.Department,
+        //     contact_no: req.body.contact_no,
+        //     address: req.body.address,
+        //     birthday: req.body.birthday,
+        //     graduation_year: req.body.graduation_year,
+        //     password: req.body.password,
+        // }, { new: true })
+        //     .then((result) => {
+        //         console.log(result)
+        //         //res.status(200).json({ "status": "Successfully Updated...." })
+        //     }).catch(err => {
+        //         console.log(err);
+        //         //res.status(500).json({ "status": "unSuccessfully Updated...." })
+        //     })
     }
 })
 

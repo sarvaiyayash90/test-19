@@ -306,7 +306,7 @@ const Edit_Student = () => {
 
     const loadUser = async () => {
         const result = await axios.get(`https://yash-19.herokuapp.com/studentdata/Editstudent/${id}`);
-        setStudent(result.data);
+        //setStudent(result.data);
         setStudent({
             first_name: result.data.first_name,
             last_name: result.data.last_name,
@@ -319,12 +319,7 @@ const Edit_Student = () => {
             profile: result.data.profile,
             password: result.data.password,
         });
-
-        //set_stu_img(result.data.profile);
-
         console.log("img", result.data.profile);
-        //console.log("new_img",stu_img)
-        //console.log("da",result.data);
     };
 
 
