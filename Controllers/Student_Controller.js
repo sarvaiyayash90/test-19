@@ -146,7 +146,6 @@ router.get('/viewstudent/:id', async (req, res) => {
     |     Edit data show       |
     +--------------------------+  */
 router.get('/Editstudent/:id', async (req, res) => {
-    res.setHeader("Access-Control-Allow-Origin", "*");
     try {
         const student_new = await student.findById(req.params.id)
         res.status(200).json(student_new)
@@ -161,7 +160,7 @@ router.get('/Editstudent/:id', async (req, res) => {
 router.put('/UpdateStudent/:id', upload.single('profile'), async (req, res) => {
 
     console.log("caac");
-    
+
 
     if (req.file) {
         const id = req.params.id;
