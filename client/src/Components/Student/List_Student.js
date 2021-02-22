@@ -3,6 +3,7 @@ import axios from 'axios';
 import moment from 'moment';
 import { saveAs } from 'file-saver';
 import jsPDF from 'jspdf'
+import 'jspdf-autotable'
 import $ from 'jquery';
 
 
@@ -115,21 +116,46 @@ const List_Student = () => {
         axios.get(`https://crud-yash-19.herokuapp.com/studentdata/Editstudent/${id}`)
         .then((res)=>{
             console.log("res",res.data)
-            var doc = new jsPDF('p', 'pt');
-            doc.setFont('helvetica')
-            doc.addImage(res.data.profile,250,50,150,150);
-            doc.text(150, 250,'First_name :-' + res.data.first_name)
-            doc.text(150, 275,'Last_name :-' + res.data.last_name)
-            doc.text(150, 300,'Email Id :-' + res.data.email_id)
-            doc.text(150, 325,'Department :-' + res.data.Department)
-            doc.text(150, 350,'Address :-' + res.data.address)
-            doc.text(150, 400,'Birthday :-' + moment(res.data.birthday).format('DD-MM-YYYY'))
-            doc.text(150, 425,'Graduation Year :-' + res.data.graduation_year)
-            doc.text(150, 450,'password :-' + res.data.password)   
+            var doc = new jsPDF('p', 'pt', 'letter');
+            doc.setLineWidth(5);  
+            doc.text(280,40, "MY DATA");
+            doc.text(280,50,"--------------")
+            doc.addImage(res.data.profile,240,60,150,150);
+            doc.autoTable({ html: '#my-table' })
+            doc.autoTable({
+                html: '#simple_table',
+                startY: 220,
+                styles: {  
+                    halign:'center',
+                    halign:'center',
+                    valign:'middle',
+                    fontSize:12,
+                    cellPadding:10,
+                    fontStyle:'bold',
+                    font:'helvetica'
+                },
+            })
             doc.save(res.data.first_name + "_" + res.data.last_name + "_" + Date.now() +'.pdf')
         }).catch((err)=>{
             console.log("Error",err);
         })
+        // .then((res)=>{
+        //     console.log("res",res.data)
+        //     var doc = new jsPDF('p', 'pt');
+        //     doc.setFont('helvetica')
+        //     doc.addImage(res.data.profile,250,50,150,150);
+        //     doc.text(150, 250,'First_name :-' + res.data.first_name)
+        //     doc.text(150, 275,'Last_name :-' + res.data.last_name)
+        //     doc.text(150, 300,'Email Id :-' + res.data.email_id)
+        //     doc.text(150, 325,'Department :-' + res.data.Department)
+        //     doc.text(150, 350,'Address :-' + res.data.address)
+        //     doc.text(150, 400,'Birthday :-' + moment(res.data.birthday).format('DD-MM-YYYY'))
+        //     doc.text(150, 425,'Graduation Year :-' + res.data.graduation_year)
+        //     doc.text(150, 450,'password :-' + res.data.password)   
+        //     doc.save(res.data.first_name + "_" + res.data.last_name + "_" + Date.now() +'.pdf')
+        // }).catch((err)=>{
+        //     console.log("Error",err);
+        // })
       }   
 
     return (
