@@ -196,7 +196,7 @@ router.put('/UpdateStudent/:id', upload.single('profile'), async (req, res) => {
     }
     else {
         try{
-            await student.findOneAndUpdate(req.params.id,req.body)
+            student.findOneAndUpdate(req.params.id,req.body)
             .then(res=>{
                 console.log("llds",res);
                 res.status(200).json({ status:"ok"})
