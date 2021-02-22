@@ -3,6 +3,8 @@ import axios from 'axios';
 import moment from 'moment';
 import { saveAs } from 'file-saver';
 import jsPDF from 'jspdf'
+import $ from 'jquery';
+
 
 import { Link, NavLink } from 'react-router-dom';
 import { CSVLink } from "react-csv";
@@ -16,14 +18,44 @@ const List_Student = () => {
     }, []);
 
     const load_student_data = async () => {
-        const result = await axios.get(`https://yash-19.herokuapp.com/studentdata/liststudent/${localStorage.getItem('Token_Key')}`);
+        const result = await axios.get(`https://crud-yash-19.herokuapp.com/studentdata/liststudent/${localStorage.getItem('Token_Key')}`);
         setStudent(result.data);
     }
 
     const delete_student = async id => {
-        await axios.delete(`https://yash-19.herokuapp.com/studentdata/deletestudent/${id}`);
+        await axios.delete(`https://crud-yash-19.herokuapp.com/studentdata/deletestudent/${id}`);
         load_student_data();
     };
+
+    const call_search = () =>{
+        // var input, filter, table, tr, td, i, txtValue;
+        // input = document.getElementById("myInput");
+        // filter = input.value.toUpperCase();
+
+        // table = document.getElementById("myTable");
+        // tr = table.getElementsByTagName("tr");
+
+        // for (i = 0; i < tr.length; i++) {
+        //   td = tr[i].getElementsByTagName("td")[1];
+        //   if (td) {
+        //     txtValue = td.textContent || td.innerText;
+        //     if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        //       tr[i].style.display = "";
+        //     } else {
+        //       tr[i].style.display = "none";
+        //     }
+        //   }       
+        // }
+        $(document).ready(function() { 
+            $("#myInput").on("keyup", function() { 
+                var value = $(this).val().toLowerCase(); 
+                $("#geeks tr").filter(function() { 
+                    $(this).toggle($(this).text() 
+                    .toLowerCase().indexOf(value) > -1) 
+                }); 
+            }); 
+        });
+    }
 
     const headers = [
         { label: "First Name", key: "first_name" },
@@ -80,7 +112,7 @@ const List_Student = () => {
 
     const pdf_new = id => {
         console.log("dsds",id);
-        axios.get(`https://yash-19.herokuapp.com/studentdata/Editstudent/${id}`)
+        axios.get(`https://crud-yash-19.herokuapp.com/studentdata/Editstudent/${id}`)
         .then((res)=>{
             console.log("res",res.data)
             var doc = new jsPDF('p', 'pt');
@@ -101,20 +133,23 @@ const List_Student = () => {
       }   
 
     return (
-        <div className="container" style={{ marginLeft: '0px' }}>
-            <div className="py-4 shadow-lg p-0 mb-5 bg-white" style={{ width: '1480px', margin: '20px 0 0 0', borderRadius: '60px' }}>
+        <div className="container text-dark" style={{ marginLeft: '0px' }}>
+            <div className="py-2 shadow-lg p-0 ml-3 bg-white" style={{ width: '1490px', margin: '20px 0 0 0', borderRadius: '60px' }}>
 
                 <div className="col-12 row">
-                    <div style={{ margin: '0 0 0 50px' }}>
+                    <div style={{ margin: '0 0 0 50px' }} className='col-7 text-left'>
                         <h1 style={{ fontSize: '40px', fontFamily: 'cursive' }}>Students List Page</h1>
                     </div>
-                    <div style={{ margin: '0 0 10px 985px' }}>
+                    <div className="col-3" >
+                        <input type="text" id="myInput" onKeyUp={()=>call_search()}  placeholder="Search for names.." title="Type in a name"/>
+                    </div>
+                    <div className="col-1 text-right">
                         {/* <Link style={{border:'none'}} className="btn btn-outline-warning btn-lg" onClick={() => { if (window.confirm('Are you sure you wish to create CSV ?')) csv(localStorage.getItem('Token_Key')); fetch_CSV(localStorage.getItem('Token_Key')) }} ><i class="far fa-file-csv fa-2x"></i></Link> */}
                         { student_data ? <CSVLink style={{border:'none'}} filename={"My_File_"+Date.now()+".csv"} className="btn btn-outline-warning btn-lg" data={student_data} headers={headers}><i class="far fa-file-csv fa-2x"></i></CSVLink> : null }
                     </div>
                 </div>
 
-                <table className="table border">
+                <table className="table" id="geeks">
                     <thead className="thead-dark">
                         <tr>
                             <th scope="col"><i class="fal fa-list-ol fa-2x" style={{color:"white"}}></i></th>

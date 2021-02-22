@@ -39,7 +39,7 @@ const Login_stu = () => {
         // bodyFormData.append("email_id", email_id);
         // bodyFormData.append("password", password);
 
-        axios.post("https://yash-19.herokuapp.com/logindata/Login", bodyFormData).then((result) => {
+        axios.post("https://crud-yash-19.herokuapp.com/logindata/Login", bodyFormData).then((result) => {
             console.log("result=>", result)
             alert(result.data.message)
             //alert(result.data.session)
@@ -53,8 +53,8 @@ const Login_stu = () => {
     }
 
     return (
-        <div className="container py-4" >
-            <div className="w-50 mx-auto shadow-lg p-5 mb-5 bg-white" style={{ borderRadius: '60px',margin:'125px 0 0 0'}}>
+        <div className="container py-4 text-dark" >
+            <div className="w-100 mx-auto shadow-lg p-5 mb-5 bg-white" style={{ borderRadius: '60px',margin:'125px 0 0 0'}}>
                 <h1 className="text-center mb-4"><b>Login</b></h1>
                 <form onSubmit={e => onhandlesubmit(e)}>
                     <div className="form-row">
@@ -84,7 +84,11 @@ const Login_stu = () => {
                             />
                         </div>
                     </div>
-                    <button type="submit" style={{ width: '200px',margin:'20px 0 0 120px'}} className="btn btn-outline-primary">LOGIN</button>
+                    <div className="form-row">
+                        <div className="form-group col-md-12 text-center">
+                            <button type="submit" className="btn btn-outline-primary">LOGIN</button>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>

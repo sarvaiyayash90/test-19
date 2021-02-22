@@ -305,7 +305,7 @@ const Edit_Student = () => {
     }, []);
 
     const loadUser = async () => {
-        const result = await axios.get(`https://yash-19.herokuapp.com/studentdata/Editstudent/${id}`);
+        const result = await axios.get(`https://crud-yash-19.herokuapp.com/studentdata/Editstudent/${id}`);
         //setStudent(result.data);
         setStudent({
             first_name: result.data.first_name,
@@ -345,7 +345,7 @@ const Edit_Student = () => {
         }
         bodyFormData.append("password", password);
         
-        await axios.put(`https://yash-19.herokuapp.com/studentdata/UpdateStudent/${id}`, bodyFormData)
+        await axios.put(`https://crud-yash-19.herokuapp.com/studentdata/UpdateStudent/${id}`, bodyFormData)
         .then((res)=>{
             console.log("res",res)
             window.location.href=`/liststudent/${localStorage.getItem('Token_Key')}`
@@ -356,17 +356,20 @@ const Edit_Student = () => {
     };
 
     return (
-        <div className="container py-4" >
+        <div className="container py-4 text-dark">
             <div className="w-80 mx-auto shadow-lg p-5 mb-5 bg-white" style={{ borderRadius: '60px' }}>
-                <div className="col-12 row">
-                    <div style={{ margin: '0 542px 0 0' }}>
-                        <Link className="btn btn-primary btn-lg" to={`/liststudent/${localStorage.getItem('Token_Key')}`}><i class="fas fa-chevron-left" style={{ color: 'white'}}></i> BACK PAGE</Link>
+                    <div className="col-lg-12 row">
+                        {/* <div style={{ margin: '0 545px 0 0' }} > */}
+                        <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 float-left">
+                            <Link className="btn btn-primary text-capitalize btn-lg" to={`/liststudent/${localStorage.getItem('Token_Key')}`}><i class="fas fa-chevron-left"></i> BACK PAGE</Link>
+                        </div>
+                        <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 float-left">
+                            {/* <h1 className="text-center mb-4"><b>My profile</b></h1> */}
+                            <h1><b>EDIT STUDENT</b></h1>
+                        </div>
                     </div>
-                    <div>
-                        {/* <h1 className="text-center mb-4"><b>My profile</b></h1> */}
-                        <h1><b>EDIT STUDENT</b></h1>
-                    </div>
-                </div>
+
+                
                 {/* <div className="row" style={{display:'inline-grid'}}>
                         <h1 className="text-center mb-4"><b>EDIT STUDENT</b></h1>
                         <Link className="btn btn-primary" to={`/liststudent/${localStorage.getItem('Token_Key')}`}>BACK PAGE</Link>

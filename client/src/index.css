@@ -14,44 +14,53 @@ code {
 
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
 /* base styles */
-* {
-  margin: 0;
-  font-family: "Quicksand";
-  color: #333;
-}
-.navbar {
+
+#mySidenav a {
+  position: absolute;
+  left: -98px;
+  transition: 0.3s;
   padding: 15px;
-  display: flex;
-  align-items: center;
-  /* max-width: 600px; */
-  margin: 0 auto;
-  border-bottom: 2px solid #f2f2f2;
-}
-.navbar h1 {
-  color: #f1356d;
-}
-.navbar .links {
-  display: flex;
-  margin-left: auto;
-}
-.navbar a {
-  margin-left: 16px;
+  width: 120px;
   text-decoration: none;
-  padding: 7px;
   font-size: 20px;
-  margin-bottom: -10px;
-  margin-top: -17px;
-  color: #333;
-}
-.navbar a:hover {
-  color: #f1356d;
-}
-.content {
-  max-width: 2000px;
-  /* margin: 40px auto; */
-  padding: 15px;
+  color: white;
+  border-radius: 0 5px 5px 0;
 }
 
+#mySidenav a:hover {
+  left: 0;
+}
+
+#home {
+  top: 20px;
+  background-color: #ffc107;
+  margin:70px 0 0 0;
+}
+
+#Profile {
+  top: 80px;
+  background-color: #4CAF50;
+  margin:150px 0 0 0;
+}
+
+#Create {
+  top: 140px;
+  background-color: #2196F3;
+  margin:210px 0 0 0;  
+}
+
+#View {
+  top: 200px;
+  background-color: #f44336;
+  margin:280px 0 0 0;
+
+}
+
+#Logout {
+  top: 260px;
+  background-color: #555;
+  margin:350px 0 0 0;
+}
 
 .create {
   max-width: 400px;
@@ -108,7 +117,49 @@ code {
   text-align: center;
 }
 
-#tab_view
+/* #tab_view
 {
   width: 510px;
+} */
+
+@media only screen and (min-width: 600px) {
+  /* For tablets: */
+  .col-s-1 {width: 8.33%;}
+  .col-s-2 {width: 16.66%;}
+  .col-s-3 {width: 25%;}
+  .col-s-4 {width: 33.33%;}
+  .col-s-5 {width: 41.66%;}
+  .col-s-6 {width: 50%;}
+  .col-s-7 {width: 58.33%;}
+  .col-s-8 {width: 66.66%;}
+  .col-s-9 {width: 75%;}
+  .col-s-10 {width: 83.33%;}
+  .col-s-11 {width: 91.66%;}
+  .col-s-12 {width: 100%;}
+}
+@media only screen and (min-width: 768px) {
+  /* For desktop: */
+  .col-1 {width: 8.33%;}
+  .col-2 {width: 16.66%;}
+  .col-3 {width: 25%;}
+  .col-4 {width: 33.33%;}
+  .col-5 {width: 41.66%;}
+  .col-6 {width: 50%;}
+  .col-7 {width: 58.33%;}
+  .col-8 {width: 66.66%;}
+  .col-9 {width: 75%;}
+  .col-10 {width: 83.33%;}
+  .col-11 {width: 91.66%;}
+  .col-12 {width: 100%;}
+}
+
+
+#myInput {
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  width: 100%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
 }

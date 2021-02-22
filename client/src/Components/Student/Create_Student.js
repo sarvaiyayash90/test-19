@@ -323,7 +323,7 @@ export default class Create_Studenet extends Component {
         bodyFormData.append("login_id", localStorage.getItem('Token_Key'));
 
         console.log(bodyFormData)
-        await axios.post("https://yash-19.herokuapp.com/studentdata/Createstudent", bodyFormData)
+        await axios.post("https://crud-yash-19.herokuapp.com/studentdata/Createstudent", bodyFormData)
             .then(response => {
                 this.setState({
                     handleResponse: {
@@ -342,16 +342,17 @@ export default class Create_Studenet extends Component {
         const { handleResponse, invalidImage } = this.state;
         return (
 
-            <div className="container py-4">
+            <div className="container py-4 text-dark">
                 {/* p-md-5 */}
                 <div className="w-80 mx-auto shadow-lg p-5 mb-5 bg-white" style={{ borderRadius: '60px' }}>
                     {/* <h1 className="text-center mb-4"><b>ADD STUDENT</b></h1> */}
 
-                    <div className="col-12 row">
-                        <div style={{ margin: '0 545px 0 0' }}>
-                            <Link className="btn btn-primary btn-lg" to="/home"><i class="fas fa-chevron-left" style={{ color: 'white' }}></i> BACK PAGE</Link>
+                    <div className="col-lg-12 row float-lg-none">
+                        {/* <div style={{ margin: '0 545px 0 0' }} > */}
+                        <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 float-left">
+                            <Link className="btn btn-primary text-capitalize btn-lg" to="/home"><i class="fas fa-chevron-left"></i> BACK PAGE</Link>
                         </div>
-                        <div>
+                        <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 float-left">
                             {/* <h1 className="text-center mb-4"><b>My profile</b></h1> */}
                             <h1><b>ADD STUDENT</b></h1>
                         </div>

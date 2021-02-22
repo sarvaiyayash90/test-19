@@ -6,18 +6,28 @@ const NavBar = () => {
 
     const auth = localStorage.getItem('Token_Key')
     return (
-        <nav className="navbar">
-            {/* <h1>MAHADEV</h1> */}
-            <NavLink className="nav-link" exact to="/home"><h1>MAHADEV</h1></NavLink>
-            <div className="links">
-                {/* <NavLink className="nav-link" exact to="/Logout">Logout</NavLink> */}
-                { auth ? <NavLink className="nav-link" exact to="/Logout">Logout <i class="fad fa-sign-out"></i></NavLink> : <a></a> }
-                {/* <NavLink className="nav-link" exact to="/Login">Login</NavLink> */}
-                { auth ?  <NavLink className="nav-link" exact to="/Profile">My Profile</NavLink> : <a></a> }
-                <NavLink className="nav-link" exact to="/Createstudent">Create Student</NavLink>
-                <NavLink className="nav-link" exact to={`/liststudent/${auth}`}>Student List</NavLink>
-            </div>
-        </nav>
+        
+        // <nav className="navbar">
+        //     {/* <h1>MAHADEV</h1> */}
+        //     <NavLink className="nav-link" exact to="/home"><h1>MAHADEV</h1></NavLink>
+        //     <div className="links">
+        //         {/* <NavLink className="nav-link" exact to="/Logout">Logout</NavLink> */}
+        //         { auth ? <NavLink className="nav-link" exact to="/Logout">Logout <i class="fad fa-sign-out"></i></NavLink> : <a></a> }
+        //         {/* <NavLink className="nav-link" exact to="/Login">Login</NavLink> */}
+        //         { auth ?  <NavLink className="nav-link" exact to="/Profile">My Profile</NavLink> : <a></a> }
+        //         <NavLink className="nav-link" exact to="/Createstudent">Create Student</NavLink>
+        //         <NavLink className="nav-link" exact to={`/liststudent/${auth}`}>Student List</NavLink>
+        //     </div>
+        // </nav>
+        
+        <div id="mySidenav" class="sidenav">
+            <NavLink id="home" className="nav-link" exact to="/home">MAHADEV</NavLink>
+            { auth ?  <NavLink id="Profile" className="nav-link" exact to="/Profile">My Profile</NavLink> : <a></a> }
+            <NavLink id="Create" className="nav-link" exact to="/Createstudent">Create</NavLink>
+            <NavLink id="View" className="nav-link" exact to={`/liststudent/${auth}`}>View</NavLink>
+            { auth ? <NavLink id="Logout" className="nav-link" exact to="/Logout">Logout <i class="fad fa-sign-out"></i></NavLink> : <a></a> }
+        </div>
+
     );
 }
 
@@ -33,7 +43,7 @@ export default NavBar;
 
 //         const token = localStorage.getItem('token')
 //         let login_check = true
-        
+
 //         if(token==null){
 //             login_check = false
 //         }
@@ -46,13 +56,13 @@ export default NavBar;
 //     render() {
 //         if(this.state.login_check == true)
 //         {
-                        
+
 //         return (
 //             <nav className="navbar">
 //             {/* <h1>MAHADEV</h1> */}
 //             <NavLink className="nav-link" exact to="/home"><h1>MAHADEV</h1></NavLink>
 //             <div className="links">
-            
+
 //             {/* {if(token)} */}
 //                 <NavLink className="nav-link" exact to="/Logout">Logout</NavLink>
 //                 {/* <NavLink className="nav-link" exact to="/Login">Login</NavLink> */}

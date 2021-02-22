@@ -25,9 +25,15 @@ export default class Home extends Component {
 
     render() {
         return (
-            <div>
-                <div style={{fontSize:'24px',margin:'190px 0 0 0'}}><i class="fab fa-react fa-10x fa-spin"></i></div>
-                <h1 style={{margin:'20px 0 20px 0',fontSize:'50px'}}>Welcome To Student</h1>
+            <div className="container-lg py-lg-5">
+                <div className="row py-5">
+                    <div className="col-lg-12 col-md-6 col-md-12 col-xs-6 col-sm-12 col-sm-6 col-12">
+                        <i style={{fontSize:'150px'}} class="fab fa-react fa-10x fa-spin"></i>
+                    </div>
+                    <div className="col-12">
+                        <h1>Welcome To Student</h1>
+                    </div>
+                </div>
             </div>
         )
     }
