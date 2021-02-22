@@ -133,17 +133,19 @@ const List_Student = () => {
       }   
 
     return (
-        <div className="container text-dark" style={{ marginLeft: '0px' }}>
-            <div className="py-2 shadow-lg p-0 ml-3 bg-white" style={{ width: '1490px', margin: '20px 0 0 0', borderRadius: '60px' }}>
+        <div className="container-fluid py-2 text-dark" style={{ marginLeft: '0px' }}>
+            <div className="py-2 table-responsive shadow-lg p-0 m-3 bg-white" style={{borderRadius: '60px' }}>
 
-                <div className="col-12 row">
-                    <div style={{ margin: '0 0 0 50px' }} className='col-7 text-left'>
-                        <h1 style={{ fontSize: '40px', fontFamily: 'cursive' }}>Students List Page</h1>
+                <div className="col-12 row ml-0">
+                    <div className='col-lg-7 col-sm-12 col-xs-12 col-md-12 text-center'>
+                        <h1 style={{ fontSize: '33px', fontFamily: 'cursive' }}>Students List Page</h1>
                     </div>
-                    <div className="col-3" >
+                    <vr/>
+                    <div className="col-lg-3 col-sm-3 col-xs-3 col-md-3">
                         <input type="text" id="myInput" onKeyUp={()=>call_search()}  placeholder="Search for names.." title="Type in a name"/>
                     </div>
-                    <div className="col-1 text-right">
+                    <vr/>
+                    <div className="col-lg-1 col-sm-2 col-xs-2 text-center">
                         {/* <Link style={{border:'none'}} className="btn btn-outline-warning btn-lg" onClick={() => { if (window.confirm('Are you sure you wish to create CSV ?')) csv(localStorage.getItem('Token_Key')); fetch_CSV(localStorage.getItem('Token_Key')) }} ><i class="far fa-file-csv fa-2x"></i></Link> */}
                         { student_data ? <CSVLink style={{border:'none'}} filename={"My_File_"+Date.now()+".csv"} className="btn btn-outline-warning btn-lg" data={student_data} headers={headers}><i class="far fa-file-csv fa-2x"></i></CSVLink> : null }
                     </div>
@@ -180,7 +182,7 @@ const List_Student = () => {
                                 <td id="tab">{moment(stu.birthday).format('DD-MM-YYYY')}</td>
                                 <td id="tab">{stu.graduation_year}</td>
                                 <td id="tab">{stu.password}</td>
-                                <td style={{verticalAlign: 'middle',textAlign: 'center',display: 'revert' }}>
+                                <td className="text-center">
                                     <Link  style={{border:'none'}}  className="btn btn-outline-danger" onClick={() => { if (window.confirm('Are you sure you wish to delete this item?')) delete_student(stu._id) }} ><i class="fas fa-trash-alt"></i></Link>
                                     <Link  style={{border:'none'}}  className="btn btn-outline-success" exact to={`/viewstudent/${stu._id}`}><i class="fa fa-eye fa-spin"></i></Link>
                                     <Link  style={{border:'none'}}  className="btn btn-outline-primary" exact to={`/Editstudent/${stu._id}`} ><i class="far fa-edit"></i></Link>
